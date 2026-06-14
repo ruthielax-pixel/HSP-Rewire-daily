@@ -204,13 +204,7 @@
   </section>
 
   <section class="fullwidth">
-    <h2>סיכום תקופתי</h2>
-    <div class="highlight" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-      <button id="show7Btn" type="button" class="button-blue">הצג סיכום 7 ימים</button>
-      <button id="show21Btn" type="button" class="button-yellow">הצג סיכום 21 יום</button>
-      <button id="exportCsvBtn" type="button" class="button-blue">ייצא CSV</button>
-    </div>
-    <div id="summaryResult" class="summary-card">לחץ על אחד הכפתורים כדי לראות את הסיכום.</div>
+    <!-- סיכום תקופתי הוסר לפי בקשת המשתמש -->
   </section>
 
   <section class="fullwidth">
@@ -221,6 +215,12 @@
       <button id="saveDailyBtn" type="button" class="button-blue">שמור יומי</button>
       <button id="loadTodayBtn" type="button" class="button-yellow">טען נתוני היום</button>
       <span id="saveStatus" style="color:#03396c;font-weight:700"></span>
+    </div>
+    <div style="margin-top:12px">
+      <h3 style="margin:8px 0 6px">יומנים שמורים</h3>
+      <div id="savedListContainer" class="highlight" style="padding:10px;min-height:48px">
+        <div id="savedList">טוען...</div>
+      </div>
     </div>
   </section>
 
@@ -352,6 +352,7 @@
       }
       localStorage.setItem(storagePrefix + data.date, JSON.stringify(data));
       showStatus('הנתונים נשמרו בהצלחה', false);
+      renderSavedList();
     }
 
     function loadDailyData(dateStr) {
@@ -378,6 +379,59 @@
         .filter(key => key.startsWith(storagePrefix))
         .map(key => JSON.parse(localStorage.getItem(key)))
         .sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    function getSavedDates() {
+      return Object.keys(localStorage)
+        .filter(key => key.startsWith(storagePrefix))
+        .map(key => key.replace(storagePrefix, ''))
+        .sort();
+    }
+
+    function renderSavedList() {
+      const container = document.getElementById('savedList');
+      if (!container) return;
+      const dates = getSavedDates();
+      if (!dates.length) {
+        container.innerHTML = '<div class="muted">אין יומנים שמורים עדיין.</div>';
+        return;
+      }
+      container.innerHTML = '';
+      dates.reverse().forEach(dateStr => {
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.justifyContent = 'space-between';
+        row.style.alignItems = 'center';
+        row.style.marginBottom = '6px';
+
+        const left = document.createElement('div');
+        left.textContent = dateStr;
+
+        const actions = document.createElement('div');
+        actions.style.display = 'flex';
+        actions.style.gap = '8px';
+
+        const loadBtn = document.createElement('button');
+        loadBtn.textContent = 'טען';
+        loadBtn.className = 'button-blue';
+        loadBtn.addEventListener('click', () => loadDailyData(dateStr));
+
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'מחק';
+        delBtn.className = 'button-yellow';
+        delBtn.addEventListener('click', () => {
+          if (!confirm('להסיר את היומן של ' + dateStr + '?')) return;
+          localStorage.removeItem(storagePrefix + dateStr);
+          showStatus('יומן הוסר: ' + dateStr, false);
+          renderSavedList();
+        });
+
+        actions.appendChild(loadBtn);
+        actions.appendChild(delBtn);
+        row.appendChild(left);
+        row.appendChild(actions);
+        container.appendChild(row);
+      });
     }
 
     function getSummary(days) {
@@ -500,9 +554,6 @@
       document.getElementById('entryDate').value = todayStr;
       document.getElementById('saveDailyBtn').addEventListener('click', saveDailyData);
       document.getElementById('loadTodayBtn').addEventListener('click', () => loadDailyData(document.getElementById('entryDate').value));
-      document.getElementById('show7Btn').addEventListener('click', () => showSummary(7));
-      document.getElementById('show21Btn').addEventListener('click', () => showSummary(21));
-      document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
       document.getElementById('supportRating').addEventListener('input', () => updateRatingValue('supportRating', 'supportRatingValue'));
       document.getElementById('satisfactionRating').addEventListener('input', () => updateRatingValue('satisfactionRating', 'satisfactionRatingValue'));
       document.getElementById('anchor').addEventListener('change', function() {
@@ -512,6 +563,7 @@
       if (!loaded) {
         showStatus('היום זהו טופס חדש, תוכל לשמור אותו לאחר מילוי.', false);
       }
+      renderSavedList();
     }
 
     initialize();
