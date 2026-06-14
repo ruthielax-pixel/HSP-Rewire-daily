@@ -216,6 +216,9 @@
       <button id="loadTodayBtn" type="button" class="button-yellow">טען נתוני היום</button>
       <span id="saveStatus" style="color:#03396c;font-weight:700"></span>
     </div>
+    <div style="margin-top:8px;display:flex;gap:12px;align-items:center">
+      <button id="clearFormBtn" type="button" class="button-blue">נקה טופס</button>
+    </div>
     <div style="margin-top:12px">
       <h3 style="margin:8px 0 6px">יומנים שמורים</h3>
       <div id="savedListContainer" class="highlight" style="padding:10px;min-height:48px">
@@ -367,6 +370,45 @@
       return data;
     }
 
+    function clearForm() {
+      // keep entryDate as-is
+      document.getElementById('gratitudeText').value = '';
+      document.getElementById('gratitudeSaid').checked = false;
+      document.getElementById('mantraText').value = '';
+      document.getElementById('mantraSaid').checked = false;
+      document.getElementById('anchor').value = '';
+      document.getElementById('anchorOtherText').value = '';
+      document.getElementById('anchorOther').style.display = 'none';
+      document.getElementById('triggerText').value = '';
+      document.getElementById('triggerSaid').checked = false;
+      document.getElementById('triggerCount').textContent = '0';
+      document.getElementById('recognitionDetails').value = '';
+      document.getElementById('stopToolText').value = '';
+      document.getElementById('identityOld').value = '';
+      document.getElementById('identityNew').value = '';
+      document.getElementById('identitySuccessCount').textContent = '0';
+      document.getElementById('newIdentityBehavior').value = '';
+      document.getElementById('ecosystemPhysical').checked = false;
+      document.getElementById('ecosystemNutrition').checked = false;
+      document.getElementById('ecosystemCreativity').checked = false;
+      document.getElementById('ecosystemMeaning').checked = false;
+      document.getElementById('ecosystemHuman').checked = false;
+      document.getElementById('ecosystemEnvironment').checked = false;
+      document.getElementById('difficultMoment').value = '';
+      document.getElementById('thoughtAtMoment').value = '';
+      document.getElementById('whatHelped').value = '';
+      document.getElementById('gratitudeTodayText').value = '';
+      document.getElementById('thanksToday').checked = false;
+      document.getElementById('mantraTodayText').value = '';
+      document.getElementById('mantraToday').checked = false;
+      document.getElementById('newIdentityAction').value = '';
+      document.getElementById('howItFelt').value = '';
+      document.getElementById('supportRating').value = 5;
+      document.getElementById('satisfactionRating').value = 50;
+      updateRatingValue('supportRating', 'supportRatingValue');
+      updateRatingValue('satisfactionRating', 'satisfactionRatingValue');
+    }
+
     function showStatus(text, isError) {
       const status = document.getElementById('saveStatus');
       status.textContent = text;
@@ -414,7 +456,10 @@
         const loadBtn = document.createElement('button');
         loadBtn.textContent = 'טען';
         loadBtn.className = 'button-blue';
-        loadBtn.addEventListener('click', () => loadDailyData(dateStr));
+        loadBtn.addEventListener('click', () => {
+          clearForm();
+          loadDailyData(dateStr);
+        });
 
         const delBtn = document.createElement('button');
         delBtn.textContent = 'מחק';
@@ -553,16 +598,18 @@
       const todayStr = getTodayDateStr();
       document.getElementById('entryDate').value = todayStr;
       document.getElementById('saveDailyBtn').addEventListener('click', saveDailyData);
-      document.getElementById('loadTodayBtn').addEventListener('click', () => loadDailyData(document.getElementById('entryDate').value));
+      document.getElementById('loadTodayBtn').addEventListener('click', () => {
+        clearForm();
+        loadDailyData(document.getElementById('entryDate').value);
+      });
       document.getElementById('supportRating').addEventListener('input', () => updateRatingValue('supportRating', 'supportRatingValue'));
       document.getElementById('satisfactionRating').addEventListener('input', () => updateRatingValue('satisfactionRating', 'satisfactionRatingValue'));
       document.getElementById('anchor').addEventListener('change', function() {
         document.getElementById('anchorOther').style.display = this.value === 'other' ? 'block' : 'none';
       });
-      const loaded = loadDailyData(todayStr);
-      if (!loaded) {
-        showStatus('היום זהו טופס חדש, תוכל לשמור אותו לאחר מילוי.', false);
-      }
+      document.getElementById('clearFormBtn').addEventListener('click', clearForm);
+      // Do not auto-load saved data on init; start with a blank form for today
+      // If you want to auto-load, call loadDailyData(getTodayDateStr()) here
       renderSavedList();
     }
 
