@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>תרגול יומי לחיווט מחדש של המח הרגיש</title>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{font-family:'Assistant', Arial, "Segoe UI", Tahoma; color:#03396c; background:#d9eefc}
+    body{max-width:940px;margin:20px auto;padding:20px;line-height:1.6;color:#03396c;background:#d9eefc}
+    h1{color:#022f57;margin-bottom:14px}
+    h2{color:#022f57;margin-bottom:12px}
+    section{background:#ffffff;padding:22px 24px;border-radius:18px;margin:16px 0;box-shadow:0 6px 22px rgba(0,0,0,0.08);border:1px solid #7eb3ff}
+    label{display:block;margin:10px 0 6px;font-weight:700;color:#03396c}
+    textarea,select,input[type=text],input[type=number]{width:100%;padding:12px;border:1px solid #8db9e9;border-radius:12px;background:#f1f8ff;color:#03396c;box-sizing:border-box}
+    input[type=range]{width:100%;}
+    .inline{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .checkboxes{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .chip{padding:10px 14px;border-radius:24px;background:#cff0ff;color:#03396c;border:1px solid #8bd4ff;display:inline-flex;align-items:center;gap:8px}
+    .chip input{margin:0}
+    .muted{color:#567ea6;font-size:0.95em}
+    .accent{color:#ffb703;font-weight:800}
+    .field-note{display:inline-block;margin-right:8px;color:#ff8c00;font-weight:700}
+    .highlight{background:#e9f8ff;border:1px solid #9fdcff;border-radius:12px;padding:14px}
+    .section-title{background:#e3f2ff;padding:10px 14px;border-radius:14px;margin:-20px -24px 18px;color:#03396c;border-bottom:1px solid #b8dbff}
+    hr{border:none;height:1px;background:#c1dbff;margin:18px 0}
+    footer{margin-top:18px;text-align:center;color:#567ea6}
+    @media print{body{background:#fff}section{box-shadow:none;border:1px solid #ccc}}
+  </style>
+</head>
+<body>
+  <h1>תרגול יומי לחיווט מחדש של המח הרגיש</h1>
+
+  <section>
+    <h2>תרגול בוקר</h2>
+    <label>1. כתוב הכרת תודה כללית על החיים</label>
+    <div class="inline">
+      <textarea id="gratitudeText" placeholder="רשום כאן הכרת תודה או סמנה שעשית בעל-פה"></textarea>
+      <div style="min-width:130px;display:flex;flex-direction:column;gap:4px">
+        <label class="muted" for="gratitudeSaid">אמרתי בעל פה</label>
+        <input type="checkbox" id="gratitudeSaid" />
+      </div>
+    </div>
+
+    <label>2. כתוב מנטרות יצירת מציאות</label>
+    <div class="inline">
+      <textarea id="mantraText" placeholder="כתוב או סמנה שעשית בעל-פה"></textarea>
+      <div style="min-width:130px;display:flex;flex-direction:column;gap:4px">
+        <label class="muted" for="mantraSaid">אמרתי בעל פה</label>
+        <input type="checkbox" id="mantraSaid" />
+      </div>
+    </div>
+
+    <label>3. בחירת משפט עוגן יומי מתוך רשימה</label>
+    <div class="highlight">
+      <select id="anchor" onchange="document.getElementById('anchorOther').style.display=(this.value==='other'?'block':'none')">
+        <option value="">-- בחר משפט עוגן --</option>
+        <option>המחשבה הזו היא רק פרשנות של המוח שלי, לא בהכרח המציאות.</option>
+        <option>אני המנהל של המחשבות שלי, גם אם כרגע הן נשמעות חזקות.</option>
+        <option>אני יכול לשנות דפוסים ישנים לא בריאים ולהחליף אותם בחדשים בריאים.</option>
+        <option>אני לומד לדבר אל עצמי כמו שהייתי מדבר אל חבר טוב.</option>
+        <option>יש לי את היכולת לבחור מחשבה מאוזנת ומיטיבה בכל רגע.</option>
+        <option>המוח שלי גמיש ומשתנה בכל פעם שאני בוחר בנתיב חדש.</option>
+        <option>אני לא חייב להאמין לכל דבר שהמוח שלי אומר, במיוחד כשהוא בלחץ.</option>
+        <option>ההצלחה שלי היא לא בלהיות מושלם, אלא בזה שזיהיתי ועצרתי.</option>
+        <option>גם כשאני לא מצליח אני ממשיך בדרך הזו ליצירת חיים בריאים יותר ולא מוותר.</option>
+        <option>אני בוחר להשקיע את האנרגיה שלי בבניית המציאות שאני רוצה.</option>
+        <option value="other">אחר...</option>
+      </select>
+      <div id="anchorOther" style="display:none;margin-top:10px">
+        <input type="text" id="anchorOtherText" placeholder="הכנס משפט עוגן משלך" />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>תרגול במהלך היום</h2>
+
+    <label>בחירת טריגר יומי</label>
+    <div class="muted">(הטריגר יכול להיות פנימי או חיצוני. ניתן לשנות או לשמור אותו לאורך ימים)</div>
+    <div style="margin-top:10px">
+      <textarea id="triggerText" placeholder="כתוב כאן את הטריגר שבחרת, או סמנה שעשית בחירה בעל-פה"></textarea>
+      <div style="margin-top:8px"><input type="checkbox" id="triggerSaid" /> <label class="muted" for="triggerSaid">בחרתי בעל-פה</label></div>
+    </div>
+
+    <label style="margin-top:18px">תרגול זיהוי</label>
+    <div class="muted">סמן בכל פעם שאתה מזהה את הטריגר ואת המחשבה המחלישה שהוא מייצר</div>
+    <div class="highlight" style="margin-top:10px;display:grid;grid-template-columns:auto auto;gap:10px;align-items:center">
+      <div style="font-weight:700;color:#022f57">זיהיתי עד כה</div>
+      <div style="display:flex;gap:10px;align-items:center;justify-content:flex-end">
+        <button type="button" onclick="updateTriggerCount(-1)" style="padding:10px 14px;border:none;border-radius:10px;background:#8ab9ff;color:#fff;cursor:pointer">-</button>
+        <span id="triggerCount" style="min-width:42px;text-align:center;font-size:1.2em;font-weight:700;color:#03396c">0</span>
+        <button type="button" onclick="updateTriggerCount(1)" style="padding:10px 14px;border:none;border-radius:10px;background:#ffb703;color:#03396c;cursor:pointer">+</button>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <textarea id="recognitionDetails" placeholder="פירוט זיהוי: מתי קרה, מה המחשבה שהחלה"></textarea>
+      <div style="margin-top:10px">
+        <label>תרגול עצירה - באיזה כלי עצירה השתמשתי?</label>
+        <input type="text" id="stopToolText" placeholder="למשל: נשימות, ספירה, דיבור פנימי" />
+      </div>
+    </div>
+
+    <hr>
+
+    <label>תרגול החלפת זהות קיימת</label>
+    <div class="inline" style="gap:12px">
+      <input type="text" id="identityOld" placeholder="החלפתי את מחשבה __" style="flex:1" />
+      <input type="text" id="identityNew" placeholder="במחשבה __" style="flex:1" />
+    </div>
+    <div class="highlight" style="margin-top:10px;display:grid;grid-template-columns:auto auto;gap:10px;align-items:center">
+      <div style="font-weight:700;color:#022f57">כמה פעמים הצלחתי?</div>
+      <div style="display:flex;gap:10px;align-items:center;justify-content:flex-end">
+        <button type="button" onclick="updateIdentitySuccessCount(-1)" class="button-blue">-</button>
+        <span id="identitySuccessCount" style="min-width:42px;text-align:center;font-size:1.2em;font-weight:700;color:#03396c">0</span>
+        <button type="button" onclick="updateIdentitySuccessCount(1)" class="button-yellow">+</button>
+      </div>
+    </div>
+    <div style="margin-top:8px"><span class="muted">סמן בכל פעם שהצלחת במהלך היום באמצעות המונה</span></div>
+
+    <label style="margin-top:14px">תרגול יצירת זהות חדשה</label>
+    <textarea id="newIdentityBehavior" placeholder="כתוב כאן התנהגות של זהות חדשה"></textarea>
+
+    <label style="margin-top:14px">תמיכת אקו־סיסטם - במה השתמשתי היום</label>
+    <div class="checkboxes">
+      <label class="chip"><input type="checkbox" id="ecosystemPhysical" /> פעילות גופנית</label>
+      <label class="chip"><input type="checkbox" id="ecosystemNutrition" /> תזונה בריאה</label>
+      <label class="chip"><input type="checkbox" id="ecosystemCreativity" /> יצירה</label>
+      <label class="chip"><input type="checkbox" id="ecosystemMeaning" /> משמעות</label>
+      <label class="chip"><input type="checkbox" id="ecosystemHuman" /> סביבה אנושית</label>
+      <label class="chip"><input type="checkbox" id="ecosystemEnvironment" /> סביבה פיזית</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>תרגול סוף יום - רפלקציה</h2>
+
+    <label>מה היה הרגע המאתגר ביותר היום?</label>
+    <textarea placeholder="תאר את הרגע המאתגר"></textarea>
+
+    <label>מה חשבתי באותו רגע?</label>
+    <textarea placeholder="רשום את המחשבה שהייתה אז"></textarea>
+
+    <label>מה עזר לי לעצור ולהחליף מחשבה?</label>
+    <textarea placeholder="כלים, אנשים, מילים שעזרו"></textarea>
+
+    <div style="margin-top:12px;">
+      <label>הכרת תודה על דברים שקרו היום</label>
+      <div class="inline" style="align-items:flex-start;gap:10px">
+        <input type="checkbox" id="thanksToday" />
+        <label for="thanksToday">אמרתי בעל פה</label>
+      </div>
+      <textarea id="gratitudeTodayText" placeholder="רשום כאן דברים שקרו היום והכרת תודה עליהם"></textarea>
+    </div>
+
+    <div style="margin-top:12px;">
+      <label>אמירת מנטרות יצירת מציאות</label>
+      <div class="inline" style="align-items:flex-start;gap:10px">
+        <input type="checkbox" id="mantraToday" />
+        <label for="mantraToday">אמרתי בעל פה</label>
+      </div>
+      <textarea id="mantraTodayText" placeholder="רשום כאן מנטרות יצירת מציאות שאמרת היום"></textarea>
+    </div>
+
+    <label>איזו מחשבה, רגש או התנהגות של זהות חדשה עשיתי היום?</label>
+    <textarea id="newIdentityAction" placeholder="תאר פעולה/מחשבה חדשה שעשית"></textarea>
+
+    <label>איך זה הרגיש?</label>
+    <textarea id="howItFelt" placeholder="רגש גופני ורגשי"></textarea>
+
+    <label>בכמה עזרה לי תמיכת האקו־סיסטם שלי? 1-10</label>
+    <div class="rating" style="display:flex;align-items:center;gap:12px">
+      <input type="range" id="supportRating" min="1" max="10" value="5" />
+      <span class="muted">בחר 1-10</span>
+      <strong id="supportRatingValue" style="min-width:32px;text-align:center;display:inline-block;color:#022f57">5</strong>
+    </div>
+
+    <label style="margin-top:14px">מ-1 עד 100, כמה אני מרוצה מרמת החיווט מחדש שלי היום?</label>
+    <div class="rating" style="display:flex;align-items:center;gap:12px">
+      <input type="range" id="satisfactionRating" min="1" max="100" value="50" style="width:100%" />
+      <span class="muted">בחר 1-100</span>
+      <strong id="satisfactionRatingValue" style="min-width:32px;text-align:center;display:inline-block;color:#022f57">50</strong>
+    </div>
+  </section>
+
+  <section>
+    <h2>סיכום תקופתי</h2>
+    <div class="highlight" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button id="show7Btn" type="button" class="button-blue">הצג סיכום 7 ימים</button>
+      <button id="show21Btn" type="button" class="button-yellow">הצג סיכום 21 יום</button>
+      <button id="exportCsvBtn" type="button" class="button-blue">ייצא CSV</button>
+    </div>
+    <div id="summaryResult" class="summary-card">לחץ על אחד הכפתורים כדי לראות את הסיכום.</div>
+  </section>
+
+  <section>
+    <h2>נתונים יומיים</h2>
+    <label>תאריך</label>
+    <input type="date" id="entryDate" />
+    <div class="highlight" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px">
+      <button id="saveDailyBtn" type="button" class="button-blue">שמור יומי</button>
+      <button id="loadTodayBtn" type="button" class="button-yellow">טען נתוני היום</button>
+      <span id="saveStatus" style="color:#03396c;font-weight:700"></span>
+    </div>
+  </section>
+
+  <footer>
+    <small>קובץ זה מיועד לתרגול יומי. אם תרצה, אעדכן אותו לגרסה שניתן למלא דיגיטלית ולשמור.</small>
+  </footer>
+
+  <script>
+    const storagePrefix = 'dailyRewire-';
+
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function getTodayDateStr() {
+      return formatDate(new Date());
+    }
+
+    function updateTriggerCount(delta) {
+      const counter = document.getElementById('triggerCount');
+      let value = parseInt(counter.textContent, 10) || 0;
+      value = Math.max(0, value + delta);
+      counter.textContent = value;
+    }
+
+    function updateIdentitySuccessCount(delta) {
+      const counter = document.getElementById('identitySuccessCount');
+      let value = parseInt(counter.textContent, 10) || 0;
+      value = Math.max(0, value + delta);
+      counter.textContent = value;
+    }
+
+    function updateRatingValue(rangeId, valueId) {
+      const range = document.getElementById(rangeId);
+      const valueEl = document.getElementById(valueId);
+      if (range && valueEl) {
+        valueEl.textContent = range.value;
+      }
+    }
+
+    function getFormData() {
+      return {
+        date: document.getElementById('entryDate').value,
+        gratitudeText: document.getElementById('gratitudeText').value,
+        gratitudeSaid: document.getElementById('gratitudeSaid').checked,
+        mantraText: document.getElementById('mantraText').value,
+        mantraSaid: document.getElementById('mantraSaid').checked,
+        anchor: document.getElementById('anchor').value,
+        anchorOtherText: document.getElementById('anchorOtherText').value,
+        triggerText: document.getElementById('triggerText').value,
+        triggerSaid: document.getElementById('triggerSaid').checked,
+        triggerCount: parseInt(document.getElementById('triggerCount').textContent, 10) || 0,
+        recognitionDetails: document.getElementById('recognitionDetails').value,
+        stopToolText: document.getElementById('stopToolText').value,
+        identityOld: document.getElementById('identityOld').value,
+        identityNew: document.getElementById('identityNew').value,
+        identitySuccessCount: parseInt(document.getElementById('identitySuccessCount').textContent, 10) || 0,
+        newIdentityBehavior: document.getElementById('newIdentityBehavior').value,
+        ecosystemPhysical: document.getElementById('ecosystemPhysical').checked,
+        ecosystemNutrition: document.getElementById('ecosystemNutrition').checked,
+        ecosystemCreativity: document.getElementById('ecosystemCreativity').checked,
+        ecosystemMeaning: document.getElementById('ecosystemMeaning').checked,
+        ecosystemHuman: document.getElementById('ecosystemHuman').checked,
+        ecosystemEnvironment: document.getElementById('ecosystemEnvironment').checked,
+        difficultMoment: document.getElementById('difficultMoment').value,
+        thoughtAtMoment: document.getElementById('thoughtAtMoment').value,
+        whatHelped: document.getElementById('whatHelped').value,
+        gratitudeTodayText: document.getElementById('gratitudeTodayText').value,
+        thanksToday: document.getElementById('thanksToday').checked,
+        mantraTodayText: document.getElementById('mantraTodayText').value,
+        mantraToday: document.getElementById('mantraToday').checked,
+        newIdentityAction: document.getElementById('newIdentityAction').value,
+        howItFelt: document.getElementById('howItFelt').value,
+        supportRating: parseInt(document.getElementById('supportRating').value, 10),
+        satisfactionRating: parseInt(document.getElementById('satisfactionRating').value, 10),
+      };
+    }
+
+    function setFormData(data) {
+      if (!data) return;
+      document.getElementById('entryDate').value = data.date || getTodayDateStr();
+      document.getElementById('gratitudeText').value = data.gratitudeText || '';
+      document.getElementById('gratitudeSaid').checked = data.gratitudeSaid || false;
+      document.getElementById('mantraText').value = data.mantraText || '';
+      document.getElementById('mantraSaid').checked = data.mantraSaid || false;
+      document.getElementById('anchor').value = data.anchor || '';
+      document.getElementById('anchorOtherText').value = data.anchorOtherText || '';
+      document.getElementById('anchorOther').style.display = data.anchor === 'other' ? 'block' : 'none';
+      document.getElementById('triggerText').value = data.triggerText || '';
+      document.getElementById('triggerSaid').checked = data.triggerSaid || false;
+      document.getElementById('triggerCount').textContent = data.triggerCount || 0;
+      document.getElementById('recognitionDetails').value = data.recognitionDetails || '';
+      document.getElementById('stopToolText').value = data.stopToolText || '';
+      document.getElementById('identityOld').value = data.identityOld || '';
+      document.getElementById('identityNew').value = data.identityNew || '';
+      document.getElementById('identitySuccessCount').textContent = data.identitySuccessCount || 0;
+      document.getElementById('newIdentityBehavior').value = data.newIdentityBehavior || '';
+      document.getElementById('ecosystemPhysical').checked = data.ecosystemPhysical || false;
+      document.getElementById('ecosystemNutrition').checked = data.ecosystemNutrition || false;
+      document.getElementById('ecosystemCreativity').checked = data.ecosystemCreativity || false;
+      document.getElementById('ecosystemMeaning').checked = data.ecosystemMeaning || false;
+      document.getElementById('ecosystemHuman').checked = data.ecosystemHuman || false;
+      document.getElementById('ecosystemEnvironment').checked = data.ecosystemEnvironment || false;
+      document.getElementById('difficultMoment').value = data.difficultMoment || '';
+      document.getElementById('thoughtAtMoment').value = data.thoughtAtMoment || '';
+      document.getElementById('whatHelped').value = data.whatHelped || '';
+      document.getElementById('gratitudeTodayText').value = data.gratitudeTodayText || '';
+      document.getElementById('thanksToday').checked = data.thanksToday || false;
+      document.getElementById('mantraTodayText').value = data.mantraTodayText || '';
+      document.getElementById('mantraToday').checked = data.mantraToday || false;
+      document.getElementById('newIdentityAction').value = data.newIdentityAction || '';
+      document.getElementById('howItFelt').value = data.howItFelt || '';
+      document.getElementById('supportRating').value = data.supportRating || 5;
+      document.getElementById('satisfactionRating').value = data.satisfactionRating || 50;
+      updateRatingValue('supportRating', 'supportRatingValue');
+      updateRatingValue('satisfactionRating', 'satisfactionRatingValue');
+    }
+
+    function saveDailyData() {
+      const data = getFormData();
+      if (!data.date) {
+        showStatus('בחר תאריך קודם לשמירה', true);
+        return;
+      }
+      localStorage.setItem(storagePrefix + data.date, JSON.stringify(data));
+      showStatus('הנתונים נשמרו בהצלחה', false);
+    }
+
+    function loadDailyData(dateStr) {
+      const raw = localStorage.getItem(storagePrefix + dateStr);
+      if (!raw) {
+        showStatus('לא נמצאו נתונים לתאריך זה', true);
+        return null;
+      }
+      const data = JSON.parse(raw);
+      setFormData(data);
+      showStatus('טענתי את הנתונים של ' + dateStr, false);
+      return data;
+    }
+
+    function showStatus(text, isError) {
+      const status = document.getElementById('saveStatus');
+      status.textContent = text;
+      status.style.color = isError ? '#d32f2f' : '#03396c';
+      setTimeout(() => { if (status.textContent === text) status.textContent = ''; }, 3500);
+    }
+
+    function getAllDailyEntries() {
+      return Object.keys(localStorage)
+        .filter(key => key.startsWith(storagePrefix))
+        .map(key => JSON.parse(localStorage.getItem(key)))
+        .sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    function getSummary(days) {
+      const allEntries = getAllDailyEntries();
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - days + 1);
+      const periodEntries = allEntries.filter(entry => new Date(entry.date) >= cutoff);
+      if (!periodEntries.length) {
+        return null;
+      }
+      const summary = {
+        days: periodEntries.length,
+        totalTriggerCount: 0,
+        averageSatisfaction: 0,
+        averageSupport: 0,
+        gratitudeDays: 0,
+        mantraDays: 0,
+        anchorSet: 0,
+        dailyCount: periodEntries.length,
+      };
+      periodEntries.forEach(entry => {
+        summary.totalTriggerCount += entry.triggerCount || 0;
+        summary.averageSatisfaction += entry.satisfactionRating || 0;
+        summary.averageSupport += entry.supportRating || 0;
+        if (entry.gratitudeSaid) summary.gratitudeDays += 1;
+        if (entry.mantraSaid) summary.mantraDays += 1;
+        if (entry.anchor) summary.anchorSet += 1;
+      });
+      summary.averageSatisfaction = Math.round(summary.averageSatisfaction / summary.dailyCount);
+      summary.averageSupport = Math.round(summary.averageSupport / summary.dailyCount);
+      return summary;
+    }
+
+    function showSummary(days) {
+      const summary = getSummary(days);
+      const container = document.getElementById('summaryResult');
+      if (!summary) {
+        container.innerHTML = `<div>אין עדיין נתונים לחישוב ${days} ימים.</div>`;
+        return;
+      }
+      container.innerHTML = `
+        <div style="font-weight:700;margin-bottom:10px">סיכום ${days} הימים האחרונים</div>
+        <div>ימים שמורים: ${summary.days}</div>
+        <div>סך כל זיהויים של טריגרים: ${summary.totalTriggerCount}</div>
+        <div>ממוצע רמת שביעות רצון: ${summary.averageSatisfaction} מתוך 100</div>
+        <div>ממוצע תמיכת אקו־סיסטם: ${summary.averageSupport} מתוך 10</div>
+        <div>ימים שבהם אמרתי הכרת תודה בבוקר: ${summary.gratitudeDays}</div>
+        <div>ימים שבהם אמרתי מנטרות בבוקר: ${summary.mantraDays}</div>
+        <div>ימים שבהם בחרתי משפט עוגן: ${summary.anchorSet}</div>
+      `;
+    }
+
+    function getCsvContent(entries) {
+      const headers = [
+        'date',
+        'gratitudeText',
+        'gratitudeSaid',
+        'mantraText',
+        'mantraSaid',
+        'anchor',
+        'anchorOtherText',
+        'triggerText',
+        'triggerSaid',
+        'triggerCount',
+        'recognitionDetails',
+        'stopToolText',
+        'identityOld',
+        'identityNew',
+        'identitySuccessCount',
+        'newIdentityBehavior',
+        'ecosystemPhysical',
+        'ecosystemNutrition',
+        'ecosystemCreativity',
+        'ecosystemMeaning',
+        'ecosystemHuman',
+        'ecosystemEnvironment',
+        'difficultMoment',
+        'thoughtAtMoment',
+        'whatHelped',
+        'gratitudeTodayText',
+        'thanksToday',
+        'mantraTodayText',
+        'mantraToday',
+        'newIdentityAction',
+        'howItFelt',
+        'supportRating',
+        'satisfactionRating'
+      ];
+      const escapeValue = value => '"' + String(value || '').replace(/"/g, '""') + '"';
+      const rows = entries.map(entry => headers.map(field => escapeValue(entry[field])).join(','));
+      return [headers.join(','), ...rows].join('\r\n');
+    }
+
+    function downloadCsv(filename, content) {
+      const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    function exportCsv() {
+      const entries = getAllDailyEntries();
+      if (!entries.length) {
+        showStatus('אין נתונים שומרים לייצוא.', true);
+        return;
+      }
+      const content = getCsvContent(entries);
+      const filename = `daily-rewire-${getTodayDateStr()}.csv`;
+      downloadCsv(filename, content);
+      showStatus('ייצוא CSV מוכן להורדה.', false);
+    }
+
+    function initialize() {
+      const todayStr = getTodayDateStr();
+      document.getElementById('entryDate').value = todayStr;
+      document.getElementById('saveDailyBtn').addEventListener('click', saveDailyData);
+      document.getElementById('loadTodayBtn').addEventListener('click', () => loadDailyData(document.getElementById('entryDate').value));
+      document.getElementById('show7Btn').addEventListener('click', () => showSummary(7));
+      document.getElementById('show21Btn').addEventListener('click', () => showSummary(21));
+      document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+      document.getElementById('supportRating').addEventListener('input', () => updateRatingValue('supportRating', 'supportRatingValue'));
+      document.getElementById('satisfactionRating').addEventListener('input', () => updateRatingValue('satisfactionRating', 'satisfactionRatingValue'));
+      document.getElementById('anchor').addEventListener('change', function() {
+        document.getElementById('anchorOther').style.display = this.value === 'other' ? 'block' : 'none';
+      });
+      const loaded = loadDailyData(todayStr);
+      if (!loaded) {
+        showStatus('היום זהו טופס חדש, תוכל לשמור אותו לאחר מילוי.', false);
+      }
+    }
+
+    initialize();
+  </script>
+</body>
+</html>
