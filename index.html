@@ -87,6 +87,19 @@
     .progress{height:8px;margin-top:14px;border-radius:999px;background:#fff;overflow:hidden}
     .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--navy-700),var(--gold-500))}
     .daily-view{display:block}
+    .weekly-view{display:block}
+    .weekly-view[hidden]{display:none}
+    .weekly-summary-grid{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:12px;margin:18px 0}
+    .weekly-stat{padding:16px;border:1px solid var(--border);border-radius:16px;background:var(--blue-100);text-align:center}
+    .weekly-stat strong{display:block;font-size:1.65rem;color:var(--navy-900)}
+    .weekly-stat span{color:var(--muted);font-weight:700}
+    .weekly-question{margin-top:16px}
+    .weekly-question textarea{min-height:86px}
+    .weekly-score{display:grid;grid-template-columns:repeat(10,minmax(42px,1fr));gap:8px;margin-top:12px}
+    .weekly-score label{margin:0;padding:10px 4px;border:1px solid var(--border);border-radius:12px;background:var(--blue-100);text-align:center;cursor:pointer}
+    .weekly-score input{display:block;margin:0 auto 4px}
+    @media(max-width:900px){.weekly-summary-grid{grid-template-columns:repeat(3,minmax(120px,1fr))}}
+    @media(max-width:600px){.weekly-summary-grid{grid-template-columns:repeat(2,minmax(120px,1fr))}.weekly-score{grid-template-columns:repeat(5,minmax(42px,1fr))}}
     .back-button{margin-bottom:16px}
     @media(max-width:700px){.dashboard-grid{grid-template-columns:1fr}.dashboard-header{align-items:flex-start;flex-direction:column}}
     @media print{body{background:#fff}section{box-shadow:none;border:1px solid #ccc}}
@@ -102,17 +115,49 @@
       <h2>לוח התקדמות אישי</h2>
       <span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">שלב פעיל: 21 יום</span>
     </div>
+    <div class="highlight" style="margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+      <div><strong>היום שלך</strong><div class="muted">המשך את התרגול היומי ושמור את ההתקדמות שלך.</div></div>
+      <button id="openDailyBtn" type="button" class="button-yellow">למלא יומן היום</button>
+    </div>
     <div class="dashboard-grid">
-      <div class="stage-card" data-stage="weekly"><h3>שבועי</h3><p>הכנה והתחלה</p><div class="progress"><span style="width:71%"></span></div></div>
+      <div class="stage-card" data-stage="weekly" id="openWeeklyBtn"><h3>שבועי</h3><p>הכנה והתחלה</p><div class="progress"><span style="width:71%"></span></div></div>
       <div class="stage-card" data-stage="21"><h3>21 יום</h3><p>חיזוק שגרה</p><div class="progress"><span style="width:57%"></span></div></div>
       <div class="stage-card" data-stage="42"><h3>42 יום</h3><p>עומק והחלפה</p><div class="progress"><span style="width:43%"></span></div></div>
       <div class="stage-card" data-stage="63"><h3>63 יום</h3><p>יציבות וקיימות</p><div class="progress"><span style="width:14%"></span></div></div>
       <div class="stage-card" data-stage="monthly"><h3>חודשי</h3><p>חיזוק מערכת</p><div class="progress"><span style="width:7%"></span></div></div>
       <div class="stage-card" data-stage="yearly"><h3>שנתי</h3><p>מטרות רחבות</p><div class="progress"><span style="width:0%"></span></div></div>
     </div>
-    <div class="highlight" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
-      <div><strong>היום שלך</strong><div class="muted">המשך את התרגול היומי ושמור את ההתקדמות שלך.</div></div>
-      <button id="openDailyBtn" type="button" class="button-yellow">למלא יומן היום</button>
+  </div>
+
+  <div id="weeklyView" class="weekly-view" hidden>
+    <button id="backFromWeeklyBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
+    <div class="dashboard-shell">
+      <div class="dashboard-header"><h2>סיכום ורפלקציה שבועי</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">השבוע שלי</span></div>
+      <p class="muted">עכשיו נעבור לחלק של הסיכום השבועי.</p>
+
+      <div class="weekly-summary-grid">
+        <div class="weekly-stat"><strong id="weeklyTriggerTotal">0</strong><span>מספר זיהויים</span></div>
+        <div class="weekly-stat"><strong id="weeklyStopTool">אין נתונים</strong><span>תרגיל עצירה מרכזי</span></div>
+        <div class="weekly-stat"><strong id="weeklyIdentityTotal">0</strong><span>מספר החלפות</span></div>
+        <div class="weekly-stat"><strong id="weeklyEcosystem">אין נתונים</strong><span>אקו סיסטם תומך מרכזי</span></div>
+        <div class="weekly-stat"><strong id="weeklySatisfaction">0</strong><span>שביעות רצון ממוצעת</span></div>
+      </div>
+
+      <h3 class="section-title">שאלות פתוחות</h3>
+      <div class="weekly-question"><label for="weeklyWeakThought">1. מה הייתה המחשבה המחלישה שחזרה הכי הרבה השבוע?</label><textarea id="weeklyWeakThought"></textarea></div>
+      <div class="weekly-question"><label for="weeklyNewThought">2. מה הייתה המחשבה החדשה שבחרתי במקומה?</label><textarea id="weeklyNewThought"></textarea></div>
+      <div class="weekly-question"><label for="weeklyProudMoment">3. באיזה רגע הייתי גאה בעצמי השבוע?</label><textarea id="weeklyProudMoment"></textarea></div>
+      <div class="weekly-question"><label for="weeklyOldPattern">4. איזה דפוס ישן הופיע השבוע?</label><textarea id="weeklyOldPattern"></textarea></div>
+      <div class="weekly-question"><label for="weeklyDifferent">5. מה עשיתי אחרת מבעבר?</label><textarea id="weeklyDifferent"></textarea></div>
+      <div class="weekly-question"><label for="weeklyLearned">6. מה למדתי על עצמי השבוע?</label><textarea id="weeklyLearned"></textarea></div>
+
+      <h3 class="section-title">ציון שבועי</h3>
+      <label>השבוע אני נותן/ת לעצמי ציון על התהליך:</label>
+      <div class="weekly-score">
+        <label><input type="radio" name="weeklyScore" value="1">⭐ 1</label><label><input type="radio" name="weeklyScore" value="2">⭐ 2</label><label><input type="radio" name="weeklyScore" value="3">⭐ 3</label><label><input type="radio" name="weeklyScore" value="4">⭐ 4</label><label><input type="radio" name="weeklyScore" value="5">⭐ 5</label><label><input type="radio" name="weeklyScore" value="6">⭐ 6</label><label><input type="radio" name="weeklyScore" value="7">⭐ 7</label><label><input type="radio" name="weeklyScore" value="8">⭐ 8</label><label><input type="radio" name="weeklyScore" value="9">⭐ 9</label><label><input type="radio" name="weeklyScore" value="10">⭐ 10</label>
+      </div>
+      <div class="weekly-question"><label for="weeklyCelebration">ההישג הקטן שאני בוחר/ת לחגוג השבוע:</label><textarea id="weeklyCelebration"></textarea></div>
+      <div class="daily-actions"><button id="saveWeeklyBtn" type="button" class="button-blue">שמור סיכום שבועי</button><span id="weeklySaveStatus" class="muted"></span></div>
     </div>
   </div>
 
@@ -525,6 +570,93 @@
       return getAllDailyEntries().filter(entry => new Date(entry.date) >= cutoff);
     }
 
+    function mostFrequentValue(values) {
+      const counts = {};
+      values.filter(Boolean).forEach(value => { counts[value] = (counts[value] || 0) + 1; });
+      return Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0] || 'אין נתונים';
+    }
+
+    function getWeeklyMetrics() {
+      const entries = getEntriesInLastDays(7);
+      const stopTools = entries.map(entry => entry.stopToolText);
+      const ecosystemLabels = {
+        ecosystemPhysical: 'פעילות גופנית',
+        ecosystemNutrition: 'תזונה בריאה',
+        ecosystemCreativity: 'יצירה',
+        ecosystemMeaning: 'משמעות',
+        ecosystemHuman: 'סביבה אנושית',
+        ecosystemEnvironment: 'סביבה פיזית',
+      };
+      const ecosystemValues = [];
+      entries.forEach(entry => {
+        Object.keys(ecosystemLabels).forEach(key => {
+          if (entry[key]) ecosystemValues.push(ecosystemLabels[key]);
+        });
+      });
+      const satisfactionTotal = entries.reduce((total, entry) => total + (Number(entry.satisfactionRating) || 0), 0);
+      return {
+        triggerTotal: entries.reduce((total, entry) => total + (Number(entry.triggerCount) || 0), 0),
+        stopTool: mostFrequentValue(stopTools),
+        identityTotal: entries.reduce((total, entry) => total + (Number(entry.identitySuccessCount) || 0), 0),
+        ecosystem: mostFrequentValue(ecosystemValues),
+        satisfaction: entries.length ? Math.round(satisfactionTotal / entries.length) : 0,
+      };
+    }
+
+    function renderWeeklyMetrics() {
+      const metrics = getWeeklyMetrics();
+      document.getElementById('weeklyTriggerTotal').textContent = metrics.triggerTotal;
+      document.getElementById('weeklyStopTool').textContent = metrics.stopTool;
+      document.getElementById('weeklyIdentityTotal').textContent = metrics.identityTotal;
+      document.getElementById('weeklyEcosystem').textContent = metrics.ecosystem;
+      document.getElementById('weeklySatisfaction').textContent = metrics.satisfaction;
+    }
+
+    function getWeeklyReflection() {
+      return {
+        weeklyWeakThought: document.getElementById('weeklyWeakThought').value,
+        weeklyNewThought: document.getElementById('weeklyNewThought').value,
+        weeklyProudMoment: document.getElementById('weeklyProudMoment').value,
+        weeklyOldPattern: document.getElementById('weeklyOldPattern').value,
+        weeklyDifferent: document.getElementById('weeklyDifferent').value,
+        weeklyLearned: document.getElementById('weeklyLearned').value,
+        weeklyScore: document.querySelector('input[name="weeklyScore"]:checked')?.value || '',
+        weeklyCelebration: document.getElementById('weeklyCelebration').value,
+      };
+    }
+
+    function setWeeklyReflection(data) {
+      if (!data) return;
+      Object.keys(data).forEach(key => {
+        if (key === 'weeklyScore') {
+          const score = document.querySelector(`input[name="weeklyScore"][value="${data[key]}"]`);
+          if (score) score.checked = true;
+          return;
+        }
+        const field = document.getElementById(key);
+        if (field) field.value = data[key] || '';
+      });
+    }
+
+    function getWeeklyStorageKey() {
+      const today = new Date();
+      const day = today.getDay();
+      today.setDate(today.getDate() - day);
+      return 'dailyRewire-weekly-reflection-' + getTodayDateStr();
+    }
+
+    function loadWeeklyReflection() {
+      const raw = localStorage.getItem(getWeeklyStorageKey());
+      if (raw) setWeeklyReflection(JSON.parse(raw));
+    }
+
+    function saveWeeklyReflection() {
+      localStorage.setItem(getWeeklyStorageKey(), JSON.stringify(getWeeklyReflection()));
+      const status = document.getElementById('weeklySaveStatus');
+      status.textContent = 'הסיכום השבועי נשמר.';
+      setTimeout(() => { status.textContent = ''; }, 3500);
+    }
+
     const reminderEnabledKey = 'dailyRewire-weekly-reminder-enabled';
     const reminderLastDateKey = 'dailyRewire-weekly-reminder-last-date';
 
@@ -783,16 +915,29 @@
 
     function showDailyView() {
       document.getElementById('dashboard').hidden = true;
+      document.getElementById('weeklyView').hidden = true;
       document.getElementById('dailyView').hidden = false;
     }
 
     function showDashboard() {
       document.getElementById('dailyView').hidden = true;
+      document.getElementById('weeklyView').hidden = true;
       document.getElementById('dashboard').hidden = false;
+    }
+
+    function showWeeklyView() {
+      document.getElementById('dashboard').hidden = true;
+      document.getElementById('dailyView').hidden = true;
+      document.getElementById('weeklyView').hidden = false;
+      renderWeeklyMetrics();
+      loadWeeklyReflection();
     }
 
     document.getElementById('openDailyBtn').addEventListener('click', showDailyView);
     document.getElementById('backToDashboardBtn').addEventListener('click', showDashboard);
+    document.getElementById('openWeeklyBtn').addEventListener('click', showWeeklyView);
+    document.getElementById('backFromWeeklyBtn').addEventListener('click', showDashboard);
+    document.getElementById('saveWeeklyBtn').addEventListener('click', saveWeeklyReflection);
 
     initialize();
   </script>
