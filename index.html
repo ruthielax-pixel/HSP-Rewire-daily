@@ -93,11 +93,42 @@
     .weekly-stat{padding:16px;border:1px solid var(--border);border-radius:16px;background:var(--blue-100);text-align:center}
     .weekly-stat strong{display:block;font-size:1.65rem;color:var(--navy-900)}
     .weekly-stat span{color:var(--muted);font-weight:700}
+    .preferred-anchor{margin:18px 0;padding:18px 20px;border:1px solid var(--gold-500);border-radius:16px;background:#fff9dc}
+    .preferred-anchor-label{display:block;color:var(--muted);font-weight:700;margin-bottom:6px}
+    .preferred-anchor-value{display:block;color:var(--navy-900);font-size:1.2rem;font-weight:800}
     .weekly-question{margin-top:16px}
     .weekly-question textarea{min-height:86px}
     .weekly-score{display:grid;grid-template-columns:repeat(10,minmax(42px,1fr));gap:8px;margin-top:12px}
     .weekly-score label{margin:0;padding:10px 4px;border:1px solid var(--border);border-radius:12px;background:var(--blue-100);text-align:center;cursor:pointer}
     .weekly-score input{display:block;margin:0 auto 4px}
+    .twenty-one-view{display:block}
+    .twenty-one-view[hidden]{display:none}
+    .forty-two-view{display:block}
+    .forty-two-view[hidden]{display:none}
+    .sixty-three-view{display:block}
+    .sixty-three-view[hidden]{display:none}
+    .monthly-view{display:block}
+    .monthly-view[hidden]{display:none}
+    .yearly-view{display:block}
+    .yearly-view[hidden]{display:none}
+    .yearly-intro{padding:20px;border:1px solid var(--gold-500);border-radius:16px;background:#fff9dc;color:var(--navy-900);line-height:1.8;margin-top:18px}
+    .yearly-intro p{margin:0 0 12px}
+    .yearly-intro p:last-child{margin-bottom:0}
+    .sixty-three-intro{padding:20px;border:1px solid var(--gold-500);border-radius:16px;background:#fff9dc;color:var(--navy-900);line-height:1.8;margin-top:18px}
+    .sixty-three-intro p{margin:0 0 12px}
+    .sixty-three-intro p:last-child{margin-bottom:0}
+    .charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+    .chart-card{padding:18px;border:1px solid var(--border);border-radius:16px;background:#fff;box-shadow:var(--shadow)}
+    .chart-card h3{margin:0 0 4px;color:var(--navy-900)}
+    .chart-card p{margin:0;color:var(--muted);font-size:.92rem}
+    .chart{height:210px;display:flex;align-items:flex-end;justify-content:space-around;gap:12px;padding:18px 10px 0;border-bottom:1px solid var(--border)}
+    .chart-column{height:100%;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;min-width:0}
+    .chart-value{font-weight:800;color:var(--navy-900);font-size:.9rem;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .chart-bar{width:min(54px,70%);min-height:4px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,var(--gold-500),var(--navy-700));transition:height .25s ease}
+    .chart-label{color:var(--muted);font-size:.86rem}
+    .twenty-one-question{margin-top:16px}
+    .twenty-one-question textarea{min-height:92px}
+    @media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
     @media(max-width:900px){.weekly-summary-grid{grid-template-columns:repeat(3,minmax(120px,1fr))}}
     @media(max-width:600px){.weekly-summary-grid{grid-template-columns:repeat(2,minmax(120px,1fr))}.weekly-score{grid-template-columns:repeat(5,minmax(42px,1fr))}}
     .back-button{margin-bottom:16px}
@@ -121,11 +152,95 @@
     </div>
     <div class="dashboard-grid">
       <div class="stage-card" data-stage="weekly" id="openWeeklyBtn"><h3>שבועי</h3><p>הכנה והתחלה</p><div class="progress"><span style="width:71%"></span></div></div>
-      <div class="stage-card" data-stage="21"><h3>21 יום</h3><p>חיזוק שגרה</p><div class="progress"><span style="width:57%"></span></div></div>
-      <div class="stage-card" data-stage="42"><h3>42 יום</h3><p>עומק והחלפה</p><div class="progress"><span style="width:43%"></span></div></div>
-      <div class="stage-card" data-stage="63"><h3>63 יום</h3><p>יציבות וקיימות</p><div class="progress"><span style="width:14%"></span></div></div>
-      <div class="stage-card" data-stage="monthly"><h3>חודשי</h3><p>חיזוק מערכת</p><div class="progress"><span style="width:7%"></span></div></div>
-      <div class="stage-card" data-stage="yearly"><h3>שנתי</h3><p>מטרות רחבות</p><div class="progress"><span style="width:0%"></span></div></div>
+      <div class="stage-card" data-stage="21" id="openTwentyOneBtn"><h3>21 יום</h3><p>חיזוק שגרה</p><div class="progress"><span style="width:57%"></span></div></div>
+      <div class="stage-card" data-stage="42" id="openFortyTwoBtn"><h3>42 יום</h3><p>עומק והחלפה</p><div class="progress"><span style="width:43%"></span></div></div>
+      <div class="stage-card" data-stage="63" id="openSixtyThreeBtn"><h3>63 יום</h3><p>יציבות וקיימות</p><div class="progress"><span style="width:14%"></span></div></div>
+      <div class="stage-card" data-stage="monthly" id="openMonthlyBtn"><h3>חודשי</h3><p>חיזוק מערכת</p><div class="progress"><span style="width:7%"></span></div></div>
+      <div class="stage-card" data-stage="yearly" id="openYearlyBtn"><h3>שנתי</h3><p>מטרות רחבות</p><div class="progress"><span style="width:0%"></span></div></div>
+    </div>
+  </div>
+
+  <div id="twentyOneView" class="twenty-one-view" hidden>
+    <button id="backFromTwentyOneBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
+    <div class="dashboard-shell">
+      <div class="dashboard-header"><h2>סיכום שלושת השבועות הראשונים</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">21 יום</span></div>
+      <p class="muted">הנתונים מחושבים מתוך השאלונים היומיים שנשמרו ב־21 הימים האחרונים.</p>
+
+      <div class="charts-grid">
+        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין שלושת השבועות</p><div id="twentyOneTriggersChart" class="chart"></div></div>
+        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="twentyOneStopToolsChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="twentyOneIdentityChart" class="chart"></div></div>
+        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="twentyOneEcosystemChart" class="chart"></div></div>
+        <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי מתוך 100</p><div id="twentyOneSatisfactionChart" class="chart"></div></div>
+        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="twentyOneAnchorChart" class="chart"></div></div>
+      </div>
+
+      <h3 class="section-title">שאלות פתוחות</h3>
+      <div class="twenty-one-question"><label for="twentyOneLearned">מה למדתי על עצמי?</label><textarea id="twentyOneLearned"></textarea></div>
+      <div class="twenty-one-question"><label for="twentyOneTrigger">איזה טריגר חוזר על עצמו?</label><textarea id="twentyOneTrigger"></textarea></div>
+      <div class="twenty-one-question"><label for="twentyOnePattern">איזה דפוס חוזר על עצמו?</label><textarea id="twentyOnePattern"></textarea></div>
+      <div class="twenty-one-question"><label for="twentyOneChange">האם משהו השתנה בי ובחיים שלי עד כה ואם כן מה?</label><textarea id="twentyOneChange"></textarea></div>
+      <div class="daily-actions"><button id="saveTwentyOneBtn" type="button" class="button-blue">שמור סיכום 21 יום</button><span id="twentyOneSaveStatus" class="muted"></span></div>
+    </div>
+  </div>
+
+  <div id="fortyTwoView" class="forty-two-view" hidden>
+    <button id="backFromFortyTwoBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
+    <div class="dashboard-shell">
+      <div class="dashboard-header"><h2>סיכום 42 יום</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">42 יום</span></div>
+      <p class="muted">ששת הגרפים מציגים את נתוני ששת השבועות האחרונים מתוך השאלונים היומיים שנשמרו.</p>
+      <div class="charts-grid">
+        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין ששת השבועות</p><div id="fortyTwoTriggersChart" class="chart"></div></div>
+        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="fortyTwoStopToolsChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="fortyTwoIdentityChart" class="chart"></div></div>
+        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="fortyTwoEcosystemChart" class="chart"></div></div>
+        <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי מתוך 100</p><div id="fortyTwoSatisfactionChart" class="chart"></div></div>
+        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="fortyTwoAnchorChart" class="chart"></div></div>
+      </div>
+      <h3 class="section-title">שאלות פתוחות</h3>
+      <div class="twenty-one-question"><label for="fortyTwoChange">איזה שינוי התחלתי להרגיש?</label><textarea id="fortyTwoChange"></textarea></div>
+      <div class="twenty-one-question"><label for="fortyTwoBehavior">איזו התנהגות חדשה מתחילה להיות טבעית יותר?</label><textarea id="fortyTwoBehavior"></textarea></div>
+      <div class="twenty-one-question"><label for="fortyTwoTrigger">מה עדיין מפעיל אותי מאוד?</label><textarea id="fortyTwoTrigger"></textarea></div>
+      <div class="twenty-one-question"><label for="fortyTwoBoundary">איזה גבול אני רוצה לחזק?</label><textarea id="fortyTwoBoundary"></textarea></div>
+      <div class="daily-actions"><button id="saveFortyTwoBtn" type="button" class="button-blue">שמור סיכום 42 יום</button><span id="fortyTwoSaveStatus" class="muted"></span></div>
+    </div>
+  </div>
+
+  <div id="sixtyThreeView" class="sixty-three-view" hidden>
+    <button id="backFromSixtyThreeBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
+    <div class="dashboard-shell">
+      <div class="dashboard-header"><h2>סיכום 63 ימים</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">63 יום</span></div>
+      <p class="muted">ששת הגרפים מציגים את נתוני תשעת השבועות האחרונים מתוך השאלונים היומיים שנשמרו.</p>
+      <div class="charts-grid">
+        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין תשעת השבועות</p><div id="sixtyThreeTriggersChart" class="chart"></div></div>
+        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="sixtyThreeStopToolsChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="sixtyThreeIdentityChart" class="chart"></div></div>
+        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="sixtyThreeEcosystemChart" class="chart"></div></div>
+        <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי מתוך 100</p><div id="sixtyThreeSatisfactionChart" class="chart"></div></div>
+        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="sixtyThreeAnchorChart" class="chart"></div></div>
+      </div>
+
+      <div class="sixty-three-intro">
+        <p><strong>כל הכבוד לך!!!!!</strong> 63 הימים המהותיים של התהליך מאחורייך ואני כל כך מקווה שהגעת לנקודה שבה את מרגישה כבר משהו מהתהליך הזה שקורה בתוכך.</p>
+        <p>החיווט מחדש הפיזי ממש שמתרחש במח ומייצר אוטומטיים חדשים ומחליש אוטומטיים ישנים.</p>
+        <p>היציאה לדרך הזו של חיווט מחדש למרות ההתמכרות העוצמתית של הגוף והנפש הרגישה לקורטיזול היא צעד אמיץ שעשית לפני 63 ימים והעובדה שאת עומדת כאן בנקודה הזו אחרי התמדה ומאמץ לטפס את ההר הזה כנגד כח הכבידה ממש היא סיבה אמיתית למסיבה וחגיגת הישגים!!</p>
+        <p>לכן בחלק הראשון של סיכום 63 ימים אני רוצה שתגידי לעצמך כמה מילים טובות:</p>
+      </div>
+
+      <h3 class="section-title">מילים טובות והתבוננות</h3>
+      <div class="twenty-one-question"><label for="sixtyThreeChallenges">מול אילו אתגרים עמדתי בימים האלה?</label><textarea id="sixtyThreeChallenges"></textarea></div>
+      <div class="twenty-one-question"><label for="sixtyThreeEvents">אילו אירועים עמדו בדרך של ההתמדה שלי?</label><textarea id="sixtyThreeEvents"></textarea></div>
+      <div class="twenty-one-question"><label for="sixtyThreeDifficultPeople">מי האנשים שהקשו עלי ללכת בדרך הזו?</label><textarea id="sixtyThreeDifficultPeople"></textarea></div>
+      <div class="twenty-one-question"><label for="sixtyThreeSupporters">מי האנשים שתמכו בי ועזרו לי להתמיד בתהליך?</label><textarea id="sixtyThreeSupporters"></textarea></div>
+      <div class="twenty-one-question"><label for="sixtyThreeLifeChange">איפה אני יכולה לראות בברור בחיים את השינוי ואת ההשפעה שלו?</label><textarea id="sixtyThreeLifeChange"></textarea></div>
+      <div class="twenty-one-question"><label for="sixtyThreeFocus">איפה עדיין יש לי עבודה לעשות ואני רוצה לשים עליה דגש?</label><textarea id="sixtyThreeFocus"></textarea></div>
+
+      <h3 class="section-title">כתיבה לחידוד ההתבוננות</h3>
+      <div class="twenty-one-question"><label for="sixtyThreeFeel">אחרי 63 יום אני מרגישה ש…</label><textarea id="sixtyThreeFeel"></textarea></div>
+      <div class="twenty-one-question"><label for="sixtyThreeLearned">ב-63 יום למדתי ש…</label><textarea id="sixtyThreeLearned"></textarea></div>
+      <div class="twenty-one-question"><label for="sixtyThreeBoundaries">מקומות שבהם למדתי להציב גבולות הם</label><textarea id="sixtyThreeBoundaries"></textarea></div>
+      <div class="twenty-one-question"><label for="sixtyThreeBeliefs">אמונות וערכים שהשתנו אצלי</label><textarea id="sixtyThreeBeliefs"></textarea></div>
+      <div class="daily-actions"><button id="saveSixtyThreeBtn" type="button" class="button-blue">שמור סיכום 63 יום</button><span id="sixtyThreeSaveStatus" class="muted"></span></div>
     </div>
   </div>
 
@@ -143,6 +258,11 @@
         <div class="weekly-stat"><strong id="weeklySatisfaction">0</strong><span>שביעות רצון ממוצעת</span></div>
       </div>
 
+      <div class="preferred-anchor">
+        <span class="preferred-anchor-label">משפט עוגן מועדף</span>
+        <strong id="weeklyPreferredAnchor" class="preferred-anchor-value">אין נתונים עדיין</strong>
+      </div>
+
       <h3 class="section-title">שאלות פתוחות</h3>
       <div class="weekly-question"><label for="weeklyWeakThought">1. מה הייתה המחשבה המחלישה שחזרה הכי הרבה השבוע?</label><textarea id="weeklyWeakThought"></textarea></div>
       <div class="weekly-question"><label for="weeklyNewThought">2. מה הייתה המחשבה החדשה שבחרתי במקומה?</label><textarea id="weeklyNewThought"></textarea></div>
@@ -158,6 +278,80 @@
       </div>
       <div class="weekly-question"><label for="weeklyCelebration">ההישג הקטן שאני בוחר/ת לחגוג השבוע:</label><textarea id="weeklyCelebration"></textarea></div>
       <div class="daily-actions"><button id="saveWeeklyBtn" type="button" class="button-blue">שמור סיכום שבועי</button><span id="weeklySaveStatus" class="muted"></span></div>
+    </div>
+  </div>
+
+  <div id="monthlyView" class="monthly-view" hidden>
+    <button id="backFromMonthlyBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
+    <div class="dashboard-shell">
+      <div class="dashboard-header"><h2>תחזוקה חודשית</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">חודשי</span></div>
+      <p class="muted">סיכום ארבעת השבועות האחרונים מתוך השאלונים היומיים שנשמרו.</p>
+      <div class="charts-grid">
+        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין ארבעת השבועות</p><div id="monthlyTriggersChart" class="chart"></div></div>
+        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="monthlyStopToolsChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="monthlyIdentityChart" class="chart"></div></div>
+        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="monthlyEcosystemChart" class="chart"></div></div>
+        <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי בכל שבוע מתוך 100</p><div id="monthlySatisfactionChart" class="chart"></div></div>
+        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="monthlyAnchorChart" class="chart"></div></div>
+      </div>
+      <div class="sixty-three-intro">
+        <p>שינוי אמיתי אינו מסתיים ביום ה-63.</p>
+        <p>לא משום שאנחנו "מקולקלים" וצריכים לתקן את עצמנו כל הזמן.</p>
+        <p>אלא משום שהדפוסים הישנים היו רגילים להיות שם כל כך הרבה זמן ללא הפרעה, מייצרים בתוכנו התמכרות לקורטיזול שמגיע יחד איתם - שהשמירה על השינוי מול העוצמה שהם הוא משימה לא קלה בכלל.</p>
+        <p>לכן חשוב ליצור תחזוקה חודשית שוטפת אחרי 63 הימים הראשונים באופן הבא:</p>
+        <p><strong>פעם בחודש שאלי את עצמך:</strong></p>
+      </div>
+      <h3 class="section-title">שאלות תחזוקה חודשית</h3>
+      <div class="twenty-one-question"><label for="monthlyPeoplePleasing">איפה אני מרצה לאחרונה?</label><textarea id="monthlyPeoplePleasing"></textarea></div>
+      <div class="twenty-one-question"><label for="monthlyBoundary">איזה גבול נחלש?</label><textarea id="monthlyBoundary"></textarea></div>
+      <div class="twenty-one-question"><label for="monthlyNeed">איזה צורך שלי נדחק הצידה?</label><textarea id="monthlyNeed"></textarea></div>
+      <div class="twenty-one-question"><label for="monthlySelfChoice">איפה אני מצליחה לבחור בעצמי?</label><textarea id="monthlySelfChoice"></textarea></div>
+      <div class="twenty-one-question"><label for="monthlySupport">איזה אדם או מערכת יחסים תומכים בי?</label><textarea id="monthlySupport"></textarea></div>
+      <div class="twenty-one-question"><label for="monthlyPractice">מהו התרגול שהייתי רוצה להתמקד בו בחודש הבא?</label><textarea id="monthlyPractice"></textarea></div>
+      <div class="daily-actions"><button id="saveMonthlyBtn" type="button" class="button-blue">שמור תחזוקה חודשית</button><span id="monthlySaveStatus" class="muted"></span></div>
+    </div>
+  </div>
+
+  <div id="yearlyView" class="yearly-view" hidden>
+    <button id="backFromYearlyBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
+    <div class="dashboard-shell">
+      <div class="dashboard-header"><h2>מעקב שנתי</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">שנתי</span></div>
+      <p class="muted">סיכום שנתי מתוך הנתונים שנשמרו בשאלונים היומיים.</p>
+      <div class="charts-grid">
+        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין ארבעת הרבעונים</p><div id="yearlyTriggersChart" class="chart"></div></div>
+        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל רבעון</p><div id="yearlyStopToolsChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל רבעון</p><div id="yearlyIdentityChart" class="chart"></div></div>
+        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל רבעון</p><div id="yearlyEcosystemChart" class="chart"></div></div>
+        <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי בכל רבעון מתוך 100</p><div id="yearlySatisfactionChart" class="chart"></div></div>
+        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל רבעון</p><div id="yearlyAnchorChart" class="chart"></div></div>
+      </div>
+
+      <div class="yearly-intro">
+        <p><strong>מעקב שנתי</strong></p>
+        <p>שנה שלמה עברה מאז שהתחלתם את תהליך החיווט מחדש.</p>
+        <p>זה הזמן לעצור לרגע ולהסתכל לא רק על המקומות שבהם עדיין קשה, אלא גם על הדרך שכבר עשיתם.</p>
+        <p>השינוי לא נמדד בכך שהדפוסים הישנים נעלמו לחלוטין. הוא נמדד ביכולת שלכם לזהות אותם מוקדם יותר, להבין מה קורה בתוככם, לבחור אחרת — ולחזור לעצמכם גם כשאתם נופלים לדפוס הישן.</p>
+        <p>פעם בשנה, עצרו לזמן של התבוננות ושאלו את עצמכם:</p>
+      </div>
+
+      <h3 class="section-title">שאלות להתבוננות שנתית</h3>
+      <div class="twenty-one-question"><label for="yearlyChange">מה השתנה בי השנה לעומת המקום שבו הייתי בתחילת התהליך?</label><textarea id="yearlyChange"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyOldPattern">איזה דפוס ישן איבד מכוחו עליי?</label><textarea id="yearlyOldPattern"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyAutomaticPatterns">באילו מצבים אני עדיין חוזרת באופן אוטומטי לדפוסים הישנים?</label><textarea id="yearlyAutomaticPatterns"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyChooseSelf">איפה למדתי לבחור בעצמי יותר — גם כשזה לא היה נוח לאחרים?</label><textarea id="yearlyChooseSelf"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyBoundaries">אילו גבולות למדתי להציב השנה?</label><textarea id="yearlyBoundaries"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyHardBoundary">איזה גבול עדיין קשה לי לשמור עליו?</label><textarea id="yearlyHardBoundary"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyNeeds">האם אני מזהה טוב יותר את הצרכים, הרצונות והרגשות שלי? איפה עדיין קשה לי להקשיב להם?</label><textarea id="yearlyNeeds"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyFreeRelationships">באילו מערכות יחסים אני מרגישה יותר חופשייה להיות אני?</label><textarea id="yearlyFreeRelationships"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyTriggerRelationship">איזו מערכת יחסים או סביבה עדיין מפעילה בי את הדפוסים הישנים?</label><textarea id="yearlyTriggerRelationship"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyDifferentResponse">מה אני עושה היום אחרת כשאני מרגישה פחד, אשמה, בושה או צורך לרצות?</label><textarea id="yearlyDifferentResponse"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyProudChange">מהו השינוי שאני הכי גאה בו השנה?</label><textarea id="yearlyProudChange"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyNewStrength">איזה כוח חדש גיליתי בעצמי שלא ידעתי שהיה בי?</label><textarea id="yearlyNewStrength"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyMaintenance">מה עוזר לי לשמור על החיווט החדש שלי?</label><textarea id="yearlyMaintenance"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlySupportSystem">איפה אני צריכה לחזק את המערך התומך שלי — אנשים, גוף, משמעות, מנוחה, תנועה או כל דבר אחר?</label><textarea id="yearlySupportSystem"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyMessage">אם הייתי פוגשת את עצמי מלפני שנה, מה הייתי רוצה לספר לה על הדרך שעשיתי?</label><textarea id="yearlyMessage"></textarea></div>
+      <div class="twenty-one-question"><label for="yearlyPreserve">מה אני רוצה לשמר בשנה הקרובה?</label><textarea id="yearlyPreserve"></textarea></div>
+      <div class="daily-actions"><button id="saveYearlyBtn" type="button" class="button-blue">שמור מעקב שנתי</button><span id="yearlySaveStatus" class="muted"></span></div>
     </div>
   </div>
 
@@ -579,6 +773,7 @@
     function getWeeklyMetrics() {
       const entries = getEntriesInLastDays(7);
       const stopTools = entries.map(entry => entry.stopToolText);
+      const anchors = entries.map(entry => entry.anchor === 'other' ? entry.anchorOtherText : entry.anchor);
       const ecosystemLabels = {
         ecosystemPhysical: 'פעילות גופנית',
         ecosystemNutrition: 'תזונה בריאה',
@@ -597,6 +792,7 @@
       return {
         triggerTotal: entries.reduce((total, entry) => total + (Number(entry.triggerCount) || 0), 0),
         stopTool: mostFrequentValue(stopTools),
+        preferredAnchor: mostFrequentValue(anchors),
         identityTotal: entries.reduce((total, entry) => total + (Number(entry.identitySuccessCount) || 0), 0),
         ecosystem: mostFrequentValue(ecosystemValues),
         satisfaction: entries.length ? Math.round(satisfactionTotal / entries.length) : 0,
@@ -607,6 +803,7 @@
       const metrics = getWeeklyMetrics();
       document.getElementById('weeklyTriggerTotal').textContent = metrics.triggerTotal;
       document.getElementById('weeklyStopTool').textContent = metrics.stopTool;
+      document.getElementById('weeklyPreferredAnchor').textContent = metrics.preferredAnchor;
       document.getElementById('weeklyIdentityTotal').textContent = metrics.identityTotal;
       document.getElementById('weeklyEcosystem').textContent = metrics.ecosystem;
       document.getElementById('weeklySatisfaction').textContent = metrics.satisfaction;
@@ -654,6 +851,196 @@
       localStorage.setItem(getWeeklyStorageKey(), JSON.stringify(getWeeklyReflection()));
       const status = document.getElementById('weeklySaveStatus');
       status.textContent = 'הסיכום השבועי נשמר.';
+      setTimeout(() => { status.textContent = ''; }, 3500);
+    }
+
+    function getPeriodWeeks(days, bucketCount = days / 7) {
+      const entries = getEntriesInLastDays(days).sort((a, b) => a.date.localeCompare(b.date));
+      const periodStart = new Date();
+      periodStart.setHours(0, 0, 0, 0);
+      periodStart.setDate(periodStart.getDate() - days + 1);
+      const daysPerBucket = days / bucketCount;
+      const buckets = Array.from({ length: bucketCount }, () => []);
+      entries.forEach(entry => {
+        const entryDate = new Date(entry.date + 'T00:00:00');
+        const dayOffset = Math.floor((entryDate - periodStart) / 86400000);
+        const bucketIndex = Math.min(bucketCount - 1, Math.max(0, Math.floor(dayOffset / daysPerBucket)));
+        buckets[bucketIndex].push(entry);
+      });
+      return buckets;
+    }
+
+    function getWeekLabel(index) {
+      return 'שבוע ' + (index + 1);
+    }
+
+    function getWeekMetric(entries, type) {
+      if (type === 'triggers') return entries.reduce((total, entry) => total + (Number(entry.triggerCount) || 0), 0);
+      if (type === 'identity') return entries.reduce((total, entry) => total + (Number(entry.identitySuccessCount) || 0), 0);
+      if (type === 'satisfaction') {
+        const total = entries.reduce((sum, entry) => sum + (Number(entry.satisfactionRating) || 0), 0);
+        return entries.length ? Math.round(total / entries.length) : 0;
+      }
+      if (type === 'stopTool') return mostFrequentValue(entries.map(entry => entry.stopToolText));
+      if (type === 'anchor') return mostFrequentValue(entries.map(entry => entry.anchor === 'other' ? entry.anchorOtherText : entry.anchor));
+      const ecosystemLabels = {
+        ecosystemPhysical: 'פעילות גופנית', ecosystemNutrition: 'תזונה בריאה', ecosystemCreativity: 'יצירה',
+        ecosystemMeaning: 'משמעות', ecosystemHuman: 'סביבה אנושית', ecosystemEnvironment: 'סביבה פיזית',
+      };
+      const values = [];
+      entries.forEach(entry => Object.keys(ecosystemLabels).forEach(key => { if (entry[key]) values.push(ecosystemLabels[key]); }));
+      return mostFrequentValue(values);
+    }
+
+    function renderPeriodChart(elementId, type, days, bucketCount, labels) {
+      const element = document.getElementById(elementId);
+      const weeks = getPeriodWeeks(days, bucketCount);
+      const values = weeks.map(entries => getWeekMetric(entries, type));
+      const numericValues = values.map(value => typeof value === 'number' ? value : 0);
+      const max = Math.max(...numericValues, 1);
+      element.innerHTML = values.map((value, index) => {
+        const numericValue = numericValues[index];
+        const height = numericValue ? Math.max(8, Math.round((numericValue / max) * 155)) : 4;
+        const label = labels ? labels[index] : getWeekLabel(index);
+        return `<div class="chart-column"><div class="chart-value">${value}</div><div class="chart-bar" style="height:${height}px"></div><div class="chart-label">${label}</div></div>`;
+      }).join('');
+    }
+
+    function renderPeriodCharts(prefix, days, bucketCount = days / 7, labels) {
+      renderPeriodChart(prefix + 'TriggersChart', 'triggers', days, bucketCount, labels);
+      renderPeriodChart(prefix + 'StopToolsChart', 'stopTool', days, bucketCount, labels);
+      renderPeriodChart(prefix + 'IdentityChart', 'identity', days, bucketCount, labels);
+      renderPeriodChart(prefix + 'EcosystemChart', 'ecosystem', days, bucketCount, labels);
+      renderPeriodChart(prefix + 'SatisfactionChart', 'satisfaction', days, bucketCount, labels);
+      renderPeriodChart(prefix + 'AnchorChart', 'anchor', days, bucketCount, labels);
+    }
+
+    function renderTwentyOneCharts() {
+      renderPeriodCharts('twentyOne', 21);
+    }
+
+    function getFortyTwoReflection() {
+      return {
+        fortyTwoChange: document.getElementById('fortyTwoChange').value,
+        fortyTwoBehavior: document.getElementById('fortyTwoBehavior').value,
+        fortyTwoTrigger: document.getElementById('fortyTwoTrigger').value,
+        fortyTwoBoundary: document.getElementById('fortyTwoBoundary').value,
+      };
+    }
+
+    function loadFortyTwoReflection() {
+      const raw = localStorage.getItem('dailyRewire-42-day-reflection');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.keys(data).forEach(key => {
+        const field = document.getElementById(key);
+        if (field) field.value = data[key] || '';
+      });
+    }
+
+    function saveFortyTwoReflection() {
+      localStorage.setItem('dailyRewire-42-day-reflection', JSON.stringify(getFortyTwoReflection()));
+      const status = document.getElementById('fortyTwoSaveStatus');
+      status.textContent = 'סיכום 42 הימים נשמר.';
+      setTimeout(() => { status.textContent = ''; }, 3500);
+    }
+
+    function renderFortyTwoCharts() {
+      renderPeriodCharts('fortyTwo', 42);
+    }
+    function renderMonthlyCharts() {
+      renderPeriodCharts('monthly', 28, 4, ['שבוע 1', 'שבוע 2', 'שבוע 3', 'שבוע 4']);
+    }
+
+    function getSixtyThreeReflection() {
+      const fields = ['sixtyThreeChallenges', 'sixtyThreeEvents', 'sixtyThreeDifficultPeople', 'sixtyThreeSupporters', 'sixtyThreeLifeChange', 'sixtyThreeFocus', 'sixtyThreeFeel', 'sixtyThreeLearned', 'sixtyThreeBoundaries', 'sixtyThreeBeliefs'];
+      return Object.fromEntries(fields.map(id => [id, document.getElementById(id).value]));
+    }
+
+    function loadSixtyThreeReflection() {
+      const raw = localStorage.getItem('dailyRewire-63-day-reflection');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.keys(data).forEach(key => {
+        const field = document.getElementById(key);
+        if (field) field.value = data[key] || '';
+      });
+    }
+
+    function saveSixtyThreeReflection() {
+      localStorage.setItem('dailyRewire-63-day-reflection', JSON.stringify(getSixtyThreeReflection()));
+      const status = document.getElementById('sixtyThreeSaveStatus');
+      status.textContent = 'סיכום 63 הימים נשמר.';
+      setTimeout(() => { status.textContent = ''; }, 3500);
+    }
+
+    function getMonthlyReflection() {
+      const fields = ['monthlyPeoplePleasing', 'monthlyBoundary', 'monthlyNeed', 'monthlySelfChoice', 'monthlySupport', 'monthlyPractice'];
+      return Object.fromEntries(fields.map(id => [id, document.getElementById(id).value]));
+    }
+
+    function loadMonthlyReflection() {
+      const raw = localStorage.getItem('dailyRewire-monthly-reflection');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.keys(data).forEach(key => {
+        const field = document.getElementById(key);
+        if (field) field.value = data[key] || '';
+      });
+    }
+
+    function saveMonthlyReflection() {
+      localStorage.setItem('dailyRewire-monthly-reflection', JSON.stringify(getMonthlyReflection()));
+      const status = document.getElementById('monthlySaveStatus');
+      status.textContent = 'התחזוקה החודשית נשמרה.';
+      setTimeout(() => { status.textContent = ''; }, 3500);
+    }
+
+    function getYearlyReflection() {
+      const fields = ['yearlyChange', 'yearlyOldPattern', 'yearlyAutomaticPatterns', 'yearlyChooseSelf', 'yearlyBoundaries', 'yearlyHardBoundary', 'yearlyNeeds', 'yearlyFreeRelationships', 'yearlyTriggerRelationship', 'yearlyDifferentResponse', 'yearlyProudChange', 'yearlyNewStrength', 'yearlyMaintenance', 'yearlySupportSystem', 'yearlyMessage', 'yearlyPreserve'];
+      return Object.fromEntries(fields.map(id => [id, document.getElementById(id).value]));
+    }
+
+    function loadYearlyReflection() {
+      const raw = localStorage.getItem('dailyRewire-yearly-reflection');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.keys(data).forEach(key => {
+        const field = document.getElementById(key);
+        if (field) field.value = data[key] || '';
+      });
+    }
+
+    function saveYearlyReflection() {
+      localStorage.setItem('dailyRewire-yearly-reflection', JSON.stringify(getYearlyReflection()));
+      const status = document.getElementById('yearlySaveStatus');
+      status.textContent = 'המעקב השנתי נשמר.';
+      setTimeout(() => { status.textContent = ''; }, 3500);
+    }
+
+    function getTwentyOneReflection() {
+      return {
+        twentyOneLearned: document.getElementById('twentyOneLearned').value,
+        twentyOneTrigger: document.getElementById('twentyOneTrigger').value,
+        twentyOnePattern: document.getElementById('twentyOnePattern').value,
+        twentyOneChange: document.getElementById('twentyOneChange').value,
+      };
+    }
+
+    function loadTwentyOneReflection() {
+      const raw = localStorage.getItem('dailyRewire-21-day-reflection');
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.keys(data).forEach(key => {
+        const field = document.getElementById(key);
+        if (field) field.value = data[key] || '';
+      });
+    }
+
+    function saveTwentyOneReflection() {
+      localStorage.setItem('dailyRewire-21-day-reflection', JSON.stringify(getTwentyOneReflection()));
+      const status = document.getElementById('twentyOneSaveStatus');
+      status.textContent = 'סיכום 21 הימים נשמר.';
       setTimeout(() => { status.textContent = ''; }, 3500);
     }
 
@@ -916,21 +1303,101 @@
     function showDailyView() {
       document.getElementById('dashboard').hidden = true;
       document.getElementById('weeklyView').hidden = true;
+      document.getElementById('twentyOneView').hidden = true;
+      document.getElementById('fortyTwoView').hidden = true;
+      document.getElementById('sixtyThreeView').hidden = true;
+      document.getElementById('monthlyView').hidden = true;
+      document.getElementById('yearlyView').hidden = true;
       document.getElementById('dailyView').hidden = false;
     }
 
     function showDashboard() {
       document.getElementById('dailyView').hidden = true;
       document.getElementById('weeklyView').hidden = true;
+      document.getElementById('twentyOneView').hidden = true;
+      document.getElementById('fortyTwoView').hidden = true;
+      document.getElementById('sixtyThreeView').hidden = true;
+      document.getElementById('monthlyView').hidden = true;
+      document.getElementById('yearlyView').hidden = true;
       document.getElementById('dashboard').hidden = false;
     }
 
     function showWeeklyView() {
       document.getElementById('dashboard').hidden = true;
       document.getElementById('dailyView').hidden = true;
+      document.getElementById('twentyOneView').hidden = true;
+      document.getElementById('fortyTwoView').hidden = true;
+      document.getElementById('sixtyThreeView').hidden = true;
+      document.getElementById('monthlyView').hidden = true;
+      document.getElementById('yearlyView').hidden = true;
       document.getElementById('weeklyView').hidden = false;
       renderWeeklyMetrics();
       loadWeeklyReflection();
+    }
+
+    function showTwentyOneView() {
+      document.getElementById('dashboard').hidden = true;
+      document.getElementById('dailyView').hidden = true;
+      document.getElementById('weeklyView').hidden = true;
+      document.getElementById('twentyOneView').hidden = false;
+      document.getElementById('fortyTwoView').hidden = true;
+      document.getElementById('sixtyThreeView').hidden = true;
+      document.getElementById('monthlyView').hidden = true;
+      document.getElementById('yearlyView').hidden = true;
+      renderTwentyOneCharts();
+      loadTwentyOneReflection();
+    }
+
+    function showFortyTwoView() {
+      document.getElementById('dashboard').hidden = true;
+      document.getElementById('dailyView').hidden = true;
+      document.getElementById('weeklyView').hidden = true;
+      document.getElementById('twentyOneView').hidden = true;
+      document.getElementById('fortyTwoView').hidden = false;
+      document.getElementById('sixtyThreeView').hidden = true;
+      document.getElementById('monthlyView').hidden = true;
+      document.getElementById('yearlyView').hidden = true;
+      renderFortyTwoCharts();
+      loadFortyTwoReflection();
+    }
+
+    function showSixtyThreeView() {
+      document.getElementById('dashboard').hidden = true;
+      document.getElementById('dailyView').hidden = true;
+      document.getElementById('weeklyView').hidden = true;
+      document.getElementById('twentyOneView').hidden = true;
+      document.getElementById('fortyTwoView').hidden = true;
+      document.getElementById('sixtyThreeView').hidden = false;
+      document.getElementById('monthlyView').hidden = true;
+      document.getElementById('yearlyView').hidden = true;
+      renderPeriodCharts('sixtyThree', 63);
+      loadSixtyThreeReflection();
+    }
+
+    function showMonthlyView() {
+      document.getElementById('dashboard').hidden = true;
+      document.getElementById('dailyView').hidden = true;
+      document.getElementById('weeklyView').hidden = true;
+      document.getElementById('twentyOneView').hidden = true;
+      document.getElementById('fortyTwoView').hidden = true;
+      document.getElementById('sixtyThreeView').hidden = true;
+      document.getElementById('monthlyView').hidden = false;
+      document.getElementById('yearlyView').hidden = true;
+      renderMonthlyCharts();
+      loadMonthlyReflection();
+    }
+
+    function showYearlyView() {
+      document.getElementById('dashboard').hidden = true;
+      document.getElementById('dailyView').hidden = true;
+      document.getElementById('weeklyView').hidden = true;
+      document.getElementById('twentyOneView').hidden = true;
+      document.getElementById('fortyTwoView').hidden = true;
+      document.getElementById('sixtyThreeView').hidden = true;
+      document.getElementById('monthlyView').hidden = true;
+      document.getElementById('yearlyView').hidden = false;
+      renderPeriodCharts('yearly', 364, 4, ['רבעון 1', 'רבעון 2', 'רבעון 3', 'רבעון 4']);
+      loadYearlyReflection();
     }
 
     document.getElementById('openDailyBtn').addEventListener('click', showDailyView);
@@ -938,6 +1405,21 @@
     document.getElementById('openWeeklyBtn').addEventListener('click', showWeeklyView);
     document.getElementById('backFromWeeklyBtn').addEventListener('click', showDashboard);
     document.getElementById('saveWeeklyBtn').addEventListener('click', saveWeeklyReflection);
+    document.getElementById('openTwentyOneBtn').addEventListener('click', showTwentyOneView);
+    document.getElementById('backFromTwentyOneBtn').addEventListener('click', showDashboard);
+    document.getElementById('saveTwentyOneBtn').addEventListener('click', saveTwentyOneReflection);
+    document.getElementById('openFortyTwoBtn').addEventListener('click', showFortyTwoView);
+    document.getElementById('backFromFortyTwoBtn').addEventListener('click', showDashboard);
+    document.getElementById('saveFortyTwoBtn').addEventListener('click', saveFortyTwoReflection);
+    document.getElementById('openSixtyThreeBtn').addEventListener('click', showSixtyThreeView);
+    document.getElementById('backFromSixtyThreeBtn').addEventListener('click', showDashboard);
+    document.getElementById('saveSixtyThreeBtn').addEventListener('click', saveSixtyThreeReflection);
+    document.getElementById('openMonthlyBtn').addEventListener('click', showMonthlyView);
+    document.getElementById('backFromMonthlyBtn').addEventListener('click', showDashboard);
+    document.getElementById('saveMonthlyBtn').addEventListener('click', saveMonthlyReflection);
+    document.getElementById('openYearlyBtn').addEventListener('click', showYearlyView);
+    document.getElementById('backFromYearlyBtn').addEventListener('click', showDashboard);
+    document.getElementById('saveYearlyBtn').addEventListener('click', saveYearlyReflection);
 
     initialize();
   </script>
