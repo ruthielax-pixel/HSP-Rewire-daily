@@ -6,38 +6,85 @@
   <title>תרגול יומי לחיווט מחדש של המח הרגיש</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{font-family:'Assistant', Arial, "Segoe UI", Tahoma; color:#03396c; background:#d9eefc}
-    body{max-width:940px;margin:20px auto;padding:20px;line-height:1.6;color:#03396c;background:#d9eefc}
-    h1{color:#022f57;margin-bottom:14px}
-    /* Weekly-like layout */
-    .sections-grid{display:grid;grid-template-columns:1fr;gap:16px}
-    @media(min-width:900px){.sections-grid{grid-template-columns:repeat(2,1fr)}.sections-grid .fullwidth{grid-column:1/-1}}
-    .week-strip{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+    :root {
+      --navy-900:#0d1d37;
+      --navy-800:#132d4d;
+      --navy-700:#163d66;
+      --navy-500:#254f80;
+      --blue-100:#edf4ff;
+      --blue-200:#e1ecff;
+      --blue-300:#c7dcff;
+      --blue-400:#9ab9f3;
+      --gold-400:#f7d14f;
+      --gold-500:#f0bb2d;
+      --gold-600:#dd9f12;
+      --text:#163d66;
+      --muted:#5a7490;
+      --card:#f8fbff;
+      --card-strong:#edf5ff;
+      --white:#ffffff;
+      --success:#2e8b57;
+      --danger:#d95d5d;
+      --border:#bfd1ee;
+      --shadow:0 10px 28px rgba(11, 25, 43, 0.08);
+      font-family:'Assistant', Arial, "Segoe UI", Tahoma;
+      color:var(--text);
+      background:linear-gradient(180deg, #edf5ff 0%, #dfeeff 100%);
+    }
+    * { box-sizing:border-box; }
+    body {
+      max-width:1200px;
+      margin:20px auto;
+      padding:20px 18px 40px;
+      line-height:1.6;
+      color:var(--text);
+      background:transparent;
+    }
+    h1{color:var(--navy-900);margin:0 0 18px;text-align:center;font-size:2.2rem}
+    .sections-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:22px;
+    }
+    .week-strip{display:flex;gap:8px;justify-content:center;margin-bottom:18px}
     .week-dot{width:12px;height:12px;border-radius:50%;background:#e6f7ff;border:2px solid #bde8ff}
-    .week-dot.today{background:#ffb703;border-color:#ffb703}
-    .button-blue{padding:10px 14px;border:none;border-radius:10px;background:#0077cc;color:#fff;cursor:pointer}
-    .button-yellow{padding:10px 14px;border:none;border-radius:10px;background:#ffb703;color:#022f57;cursor:pointer}
-    h2{color:#022f57;margin-bottom:12px}
-    section{background:#ffffff;padding:22px 24px;border-radius:18px;margin:16px 0;box-shadow:0 6px 22px rgba(0,0,0,0.08);border:1px solid #7eb3ff}
-    label{display:block;margin:10px 0 6px;font-weight:700;color:#03396c}
-    textarea,select,input[type=text],input[type=number]{width:100%;padding:12px;border:1px solid #8db9e9;border-radius:12px;background:#f1f8ff;color:#03396c;box-sizing:border-box}
-    input[type=range]{width:100%;}
-    .inline{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .week-dot.today{background:var(--gold-400);border-color:var(--gold-400)}
+    .button-blue{padding:10px 16px;border:none;border-radius:12px;background:var(--navy-700);color:var(--white);cursor:pointer;font-weight:700;box-shadow:0 6px 16px rgba(29,58,92,0.2)}
+    .button-yellow{padding:10px 16px;border:none;border-radius:12px;background:var(--gold-400);color:var(--navy-900);cursor:pointer;font-weight:700;box-shadow:0 6px 16px rgba(245, 201, 76, 0.25)}
+    h2{color:var(--navy-900);margin:0 0 16px;font-size:1.8rem}
+    section{
+      background:var(--card);
+      padding:26px 28px;
+      border-radius:24px;
+      margin:0;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      width:100%;
+    }
+    label{display:block;margin:10px 0 6px;font-weight:700;color:var(--text)}
+    textarea,select,input[type=text],input[type=number],input[type=time],input[type=date]{width:100%;padding:12px 14px;border:1px solid var(--blue-400);border-radius:12px;background:var(--white);color:var(--text);box-sizing:border-box;outline:none}
+    input[type=time], input[type=date]{min-height:46px}
+    input[type=range]{width:100%}
+    .inline{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
     .checkboxes{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-    .chip{padding:10px 14px;border-radius:24px;background:#cff0ff;color:#03396c;border:1px solid #8bd4ff;display:inline-flex;align-items:center;gap:8px}
+    .chip{padding:10px 14px;border-radius:999px;background:var(--blue-100);color:var(--text);border:1px solid var(--blue-300);display:inline-flex;align-items:center;gap:8px;min-height:42px}
     .chip input{margin:0}
-    .muted{color:#567ea6;font-size:0.95em}
-    .accent{color:#ffb703;font-weight:800}
-    .field-note{display:inline-block;margin-right:8px;color:#ff8c00;font-weight:700}
-    .highlight{background:#e9f8ff;border:1px solid #9fdcff;border-radius:12px;padding:14px}
-    .section-title{background:#e3f2ff;padding:10px 14px;border-radius:14px;margin:-20px -24px 18px;color:#03396c;border-bottom:1px solid #b8dbff}
-    hr{border:none;height:1px;background:#c1dbff;margin:18px 0}
-    footer{margin-top:18px;text-align:center;color:#567ea6}
+    .muted{color:var(--muted);font-size:0.95em}
+    .accent{color:var(--gold-500);font-weight:800}
+    .field-note{display:inline-block;margin-right:8px;color:var(--gold-600);font-weight:700}
+    .highlight{background:var(--card-strong);border:1px solid var(--border);border-radius:16px;padding:14px}
+    .section-title{background:#e3f2ff;padding:10px 14px;border-radius:14px;margin:-20px -24px 18px;color:var(--text);border-bottom:1px solid var(--border)}
+    hr{border:none;height:1px;background:var(--border);margin:18px 0}
+    footer{margin-top:24px;text-align:center;color:var(--muted)}
     @media print{body{background:#fff}section{box-shadow:none;border:1px solid #ccc}}
+    @media(min-width:900px){
+      .sections-grid{grid-template-columns:1fr}
+      .sections-grid .fullwidth{grid-column:1/-1}
+    }
   </style>
 </head>
 <body>
-  <h1>תרגול יומי לחיווט מחדש של המח הרגיש</h1>
+  <h1>תרגול יומי לחיווט מחדש</h1>
 
   <div class="week-strip" aria-hidden="true">
     <div class="week-dot"></div>
@@ -52,7 +99,7 @@
   <div class="sections-grid">
 
   <section>
-    <h2>תרגול בוקר</h2>
+    <h2>תרגול תחילת יום</h2>
     <label>1. כתוב הכרת תודה כללית על החיים</label>
     <div class="inline">
       <textarea id="gratitudeText" placeholder="רשום כאן הכרת תודה או סמנה שעשית בעל-פה"></textarea>
@@ -96,15 +143,13 @@
   <section>
     <h2>תרגול במהלך היום</h2>
 
-    <label>בחירת טריגר יומי</label>
-    <div class="muted">(הטריגר יכול להיות פנימי או חיצוני. ניתן לשנות או לשמור אותו לאורך ימים)</div>
-    <div style="margin-top:10px">
-      <textarea id="triggerText" placeholder="כתוב כאן את הטריגר שבחרת, או סמנה שעשית בחירה בעל-פה"></textarea>
-      <div style="margin-top:8px"><input type="checkbox" id="triggerSaid" /> <label class="muted" for="triggerSaid">בחרתי בעל-פה</label></div>
+    <label>יצירת תזכורת בשעה</label>
+    <div class="highlight">
+      <input type="time" id="reminderTime" value="09:00" />
     </div>
 
     <label style="margin-top:18px">תרגול זיהוי</label>
-    <div class="muted">סמן בכל פעם שאתה מזהה את הטריגר ואת המחשבה המחלישה שהוא מייצר</div>
+    <div class="muted">סמן בכל פעם שאת מזהה מחשבה מחלישה</div>
     <div class="highlight" style="margin-top:10px;display:grid;grid-template-columns:auto auto;gap:10px;align-items:center">
       <div style="font-weight:700;color:#022f57">זיהיתי עד כה</div>
       <div style="display:flex;gap:10px;align-items:center;justify-content:flex-end">
@@ -153,7 +198,7 @@
   </section>
 
   <section>
-    <h2>תרגול סוף יום - רפלקציה</h2>
+    <h2>תרגול סוף יום</h2>
 
     <label>מה היה הרגע המאתגר ביותר היום?</label>
     <textarea id="difficultMoment" placeholder="תאר את הרגע המאתגר"></textarea>
@@ -216,8 +261,21 @@
       <button id="loadTodayBtn" type="button" class="button-yellow">טען נתוני היום</button>
       <span id="saveStatus" style="color:#03396c;font-weight:700"></span>
     </div>
-    <div style="margin-top:8px;display:flex;gap:12px;align-items:center">
+    <div style="margin-top:8px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
       <button id="clearFormBtn" type="button" class="button-blue">נקה טופס</button>
+      <button id="exportCsvBtn" type="button" class="button-yellow">ייצא CSV לשבוע</button>
+    </div>
+    <div style="margin-top:10px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <input type="checkbox" id="weeklyReminderEnabled" /> הפעל תזכורת שבועית לייצוא ביום חמישי 20:00
+      </label>
+      <button id="requestNotificationPermissionBtn" type="button" class="button-blue">הפעל התראות</button>
+    </div>
+    <div style="margin-top:8px;font-size:0.95em;color:#567ea6">
+      התזכורת תופיע בדפדפן כשדף היישום פתוח. אם לא מופיעה, אפשר לטען שוב או לאשר התראות.
+    </div>
+    <div style="margin-top:8px;font-size:0.95em;color:#567ea6">
+      הורד קובץ CSV וייבא אותו באפליקציית הסקירה השבועית.
     </div>
     <div style="margin-top:12px">
       <h3 style="margin:8px 0 6px">יומנים שמורים</h3>
@@ -278,8 +336,9 @@
         mantraSaid: document.getElementById('mantraSaid').checked,
         anchor: document.getElementById('anchor').value,
         anchorOtherText: document.getElementById('anchorOtherText').value,
-        triggerText: document.getElementById('triggerText').value,
-        triggerSaid: document.getElementById('triggerSaid').checked,
+        reminderTime: document.getElementById('reminderTime') ? document.getElementById('reminderTime').value : '',
+        triggerText: document.getElementById('triggerText') ? document.getElementById('triggerText').value : '',
+        triggerSaid: document.getElementById('triggerSaid') ? document.getElementById('triggerSaid').checked : false,
         triggerCount: parseInt(document.getElementById('triggerCount').textContent, 10) || 0,
         recognitionDetails: document.getElementById('recognitionDetails').value,
         stopToolText: document.getElementById('stopToolText').value,
@@ -317,8 +376,9 @@
       document.getElementById('anchor').value = data.anchor || '';
       document.getElementById('anchorOtherText').value = data.anchorOtherText || '';
       document.getElementById('anchorOther').style.display = data.anchor === 'other' ? 'block' : 'none';
-      document.getElementById('triggerText').value = data.triggerText || '';
-      document.getElementById('triggerSaid').checked = data.triggerSaid || false;
+      if (document.getElementById('reminderTime')) document.getElementById('reminderTime').value = data.reminderTime || '09:00';
+      if (document.getElementById('triggerText')) document.getElementById('triggerText').value = data.triggerText || '';
+      if (document.getElementById('triggerSaid')) document.getElementById('triggerSaid').checked = data.triggerSaid || false;
       document.getElementById('triggerCount').textContent = data.triggerCount || 0;
       document.getElementById('recognitionDetails').value = data.recognitionDetails || '';
       document.getElementById('stopToolText').value = data.stopToolText || '';
@@ -379,8 +439,9 @@
       document.getElementById('anchor').value = '';
       document.getElementById('anchorOtherText').value = '';
       document.getElementById('anchorOther').style.display = 'none';
-      document.getElementById('triggerText').value = '';
-      document.getElementById('triggerSaid').checked = false;
+      if (document.getElementById('reminderTime')) document.getElementById('reminderTime').value = '09:00';
+      if (document.getElementById('triggerText')) document.getElementById('triggerText').value = '';
+      if (document.getElementById('triggerSaid')) document.getElementById('triggerSaid').checked = false;
       document.getElementById('triggerCount').textContent = '0';
       document.getElementById('recognitionDetails').value = '';
       document.getElementById('stopToolText').value = '';
@@ -421,6 +482,66 @@
         .filter(key => key.startsWith(storagePrefix))
         .map(key => JSON.parse(localStorage.getItem(key)))
         .sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    function getEntriesInLastDays(days) {
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - days + 1);
+      return getAllDailyEntries().filter(entry => new Date(entry.date) >= cutoff);
+    }
+
+    const reminderEnabledKey = 'dailyRewire-weekly-reminder-enabled';
+    const reminderLastDateKey = 'dailyRewire-weekly-reminder-last-date';
+
+    function isWeeklyReminderEnabled() {
+      return localStorage.getItem(reminderEnabledKey) === 'true';
+    }
+
+    function setWeeklyReminderEnabled(value) {
+      localStorage.setItem(reminderEnabledKey, value ? 'true' : 'false');
+      const checkbox = document.getElementById('weeklyReminderEnabled');
+      if (checkbox) checkbox.checked = value;
+    }
+
+    function getLastReminderDate() {
+      return localStorage.getItem(reminderLastDateKey);
+    }
+
+    function setLastReminderDate(dateStr) {
+      localStorage.setItem(reminderLastDateKey, dateStr);
+    }
+
+    function requestNotificationPermission() {
+      if (!('Notification' in window)) {
+        showStatus('הדפדפן אינו תומך בהתראות.', true);
+        return;
+      }
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          showStatus('התראות הושרו בהצלחה.', false);
+        } else {
+          showStatus('לא ניתן להפעיל התראות בדפדפן.', true);
+        }
+      });
+    }
+
+    function showWeeklyReminder() {
+      const message = 'תזכורת: הגיע יום חמישי 20:00 — הזמן לייצא CSV לשבוע.';
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(message);
+      } else {
+        alert(message);
+      }
+    }
+
+    function checkWeeklyReminder() {
+      if (!isWeeklyReminderEnabled()) return;
+      const now = new Date();
+      if (now.getDay() !== 4 || now.getHours() !== 20) return;
+      const reminderDate = formatDate(now);
+      if (getLastReminderDate() === reminderDate) return;
+      setLastReminderDate(reminderDate);
+      showWeeklyReminder();
     }
 
     function getSavedDates() {
@@ -582,14 +703,14 @@
       URL.revokeObjectURL(url);
     }
 
-    function exportCsv() {
-      const entries = getAllDailyEntries();
+    function exportCsv(days) {
+      const entries = typeof days === 'number' ? getEntriesInLastDays(days) : getAllDailyEntries();
       if (!entries.length) {
         showStatus('אין נתונים שומרים לייצוא.', true);
         return;
       }
       const content = getCsvContent(entries);
-      const filename = `daily-rewire-${getTodayDateStr()}.csv`;
+      const filename = days ? `daily-rewire-week-${getTodayDateStr()}.csv` : `daily-rewire-${getTodayDateStr()}.csv`;
       downloadCsv(filename, content);
       showStatus('ייצוא CSV מוכן להורדה.', false);
     }
@@ -608,9 +729,21 @@
         document.getElementById('anchorOther').style.display = this.value === 'other' ? 'block' : 'none';
       });
       document.getElementById('clearFormBtn').addEventListener('click', clearForm);
+      document.getElementById('requestNotificationPermissionBtn').addEventListener('click', requestNotificationPermission);
+      const reminderCheckbox = document.getElementById('weeklyReminderEnabled');
+      if (reminderCheckbox) {
+        reminderCheckbox.checked = isWeeklyReminderEnabled();
+        reminderCheckbox.addEventListener('change', function() {
+          setWeeklyReminderEnabled(this.checked);
+          showStatus(this.checked ? 'התזכורת השבועית הופעלה.' : 'התזכורת השבועית הושבתה.', false);
+        });
+      }
+      document.getElementById('exportCsvBtn').addEventListener('click', () => exportCsv(7));
       // Do not auto-load saved data on init; start with a blank form for today
       // If you want to auto-load, call loadDailyData(getTodayDateStr()) here
       renderSavedList();
+      setInterval(checkWeeklyReminder, 30 * 1000);
+      checkWeeklyReminder();
     }
 
     initialize();
