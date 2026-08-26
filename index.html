@@ -76,6 +76,19 @@
     .section-title{background:#e3f2ff;padding:10px 14px;border-radius:14px;margin:-20px -24px 18px;color:var(--text);border-bottom:1px solid var(--border)}
     hr{border:none;height:1px;background:var(--border);margin:18px 0}
     footer{margin-top:24px;text-align:center;color:var(--muted)}
+    .dashboard-shell{display:block;background:var(--card);padding:26px 28px;border-radius:24px;margin:0 0 22px;box-shadow:var(--shadow);border:1px solid var(--border)}
+    .dashboard-shell[hidden], .daily-view[hidden]{display:none}
+    .dashboard-header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
+    .dashboard-header h2{margin:0}
+    .dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .stage-card{padding:18px;border:1px solid var(--border);border-radius:16px;background:var(--blue-100);cursor:pointer}
+    .stage-card h3{margin:0 0 8px;color:var(--navy-900)}
+    .stage-card p{margin:0;color:var(--muted)}
+    .progress{height:8px;margin-top:14px;border-radius:999px;background:#fff;overflow:hidden}
+    .progress span{display:block;height:100%;background:linear-gradient(90deg,var(--navy-700),var(--gold-500))}
+    .daily-view{display:block}
+    .back-button{margin-bottom:16px}
+    @media(max-width:700px){.dashboard-grid{grid-template-columns:1fr}.dashboard-header{align-items:flex-start;flex-direction:column}}
     @media print{body{background:#fff}section{box-shadow:none;border:1px solid #ccc}}
     @media(min-width:900px){
       .sections-grid{grid-template-columns:1fr}
@@ -84,7 +97,28 @@
   </style>
 </head>
 <body>
-  <h1>תרגול יומי לחיווט מחדש</h1>
+  <div id="dashboard" class="dashboard-shell">
+    <div class="dashboard-header">
+      <h2>לוח התקדמות אישי</h2>
+      <span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">שלב פעיל: 21 יום</span>
+    </div>
+    <div class="dashboard-grid">
+      <div class="stage-card" data-stage="weekly"><h3>שבועי</h3><p>הכנה והתחלה</p><div class="progress"><span style="width:71%"></span></div></div>
+      <div class="stage-card" data-stage="21"><h3>21 יום</h3><p>חיזוק שגרה</p><div class="progress"><span style="width:57%"></span></div></div>
+      <div class="stage-card" data-stage="42"><h3>42 יום</h3><p>עומק והחלפה</p><div class="progress"><span style="width:43%"></span></div></div>
+      <div class="stage-card" data-stage="63"><h3>63 יום</h3><p>יציבות וקיימות</p><div class="progress"><span style="width:14%"></span></div></div>
+      <div class="stage-card" data-stage="monthly"><h3>חודשי</h3><p>חיזוק מערכת</p><div class="progress"><span style="width:7%"></span></div></div>
+      <div class="stage-card" data-stage="yearly"><h3>שנתי</h3><p>מטרות רחבות</p><div class="progress"><span style="width:0%"></span></div></div>
+    </div>
+    <div class="highlight" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+      <div><strong>היום שלך</strong><div class="muted">המשך את התרגול היומי ושמור את ההתקדמות שלך.</div></div>
+      <button id="openDailyBtn" type="button" class="button-yellow">למלא יומן היום</button>
+    </div>
+  </div>
+
+  <div id="dailyView" class="daily-view" hidden>
+    <button id="backToDashboardBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
+    <h1>תרגול יומי לחיווט מחדש</h1>
 
   <div class="week-strip" aria-hidden="true">
     <div class="week-dot"></div>
@@ -290,6 +324,7 @@
   <footer>
     <small>קובץ זה מיועד לתרגול יומי. אם תרצה, אעדכן אותו לגרסה שניתן למלא דיגיטלית ולשמור.</small>
   </footer>
+  </div>
 
   <script>
     const storagePrefix = 'dailyRewire-';
@@ -745,6 +780,19 @@
       setInterval(checkWeeklyReminder, 30 * 1000);
       checkWeeklyReminder();
     }
+
+    function showDailyView() {
+      document.getElementById('dashboard').hidden = true;
+      document.getElementById('dailyView').hidden = false;
+    }
+
+    function showDashboard() {
+      document.getElementById('dailyView').hidden = true;
+      document.getElementById('dashboard').hidden = false;
+    }
+
+    document.getElementById('openDailyBtn').addEventListener('click', showDailyView);
+    document.getElementById('backToDashboardBtn').addEventListener('click', showDashboard);
 
     initialize();
   </script>
