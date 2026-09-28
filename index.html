@@ -117,7 +117,7 @@
     .sixty-three-intro{padding:20px;border:1px solid var(--gold-500);border-radius:16px;background:#fff9dc;color:var(--navy-900);line-height:1.8;margin-top:18px}
     .sixty-three-intro p{margin:0 0 12px}
     .sixty-three-intro p:last-child{margin-bottom:0}
-    .charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+    .charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0 28px}
     .chart-card{padding:18px;border:1px solid var(--border);border-radius:16px;background:#fff;box-shadow:var(--shadow)}
     .chart-card h3{margin:0 0 4px;color:var(--navy-900)}
     .chart-card p{margin:0;color:var(--muted);font-size:.92rem}
@@ -144,103 +144,15 @@
   <div id="dashboard" class="dashboard-shell">
     <div class="dashboard-header">
       <h2>לוח התקדמות אישי</h2>
-      <span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">שלב פעיל: 21 יום</span>
     </div>
     <div class="highlight" style="margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
       <div><strong>היום שלך</strong><div class="muted">המשך את התרגול היומי ושמור את ההתקדמות שלך.</div></div>
       <button id="openDailyBtn" type="button" class="button-yellow">למלא יומן היום</button>
     </div>
     <div class="dashboard-grid">
-      <div class="stage-card" data-stage="weekly" id="openWeeklyBtn"><h3>שבועי</h3><p>הכנה והתחלה</p><div class="progress"><span style="width:71%"></span></div></div>
-      <div class="stage-card" data-stage="21" id="openTwentyOneBtn"><h3>21 יום</h3><p>חיזוק שגרה</p><div class="progress"><span style="width:57%"></span></div></div>
-      <div class="stage-card" data-stage="42" id="openFortyTwoBtn"><h3>42 יום</h3><p>עומק והחלפה</p><div class="progress"><span style="width:43%"></span></div></div>
-      <div class="stage-card" data-stage="63" id="openSixtyThreeBtn"><h3>63 יום</h3><p>יציבות וקיימות</p><div class="progress"><span style="width:14%"></span></div></div>
-      <div class="stage-card" data-stage="monthly" id="openMonthlyBtn"><h3>חודשי</h3><p>חיזוק מערכת</p><div class="progress"><span style="width:7%"></span></div></div>
-      <div class="stage-card" data-stage="yearly" id="openYearlyBtn"><h3>שנתי</h3><p>מטרות רחבות</p><div class="progress"><span style="width:0%"></span></div></div>
-    </div>
-  </div>
-
-  <div id="twentyOneView" class="twenty-one-view" hidden>
-    <button id="backFromTwentyOneBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
-    <div class="dashboard-shell">
-      <div class="dashboard-header"><h2>סיכום שלושת השבועות הראשונים</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">21 יום</span></div>
-      <p class="muted">הנתונים מחושבים מתוך השאלונים היומיים שנשמרו ב־21 הימים האחרונים.</p>
-
-      <div class="charts-grid">
-        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין שלושת השבועות</p><div id="twentyOneTriggersChart" class="chart"></div></div>
-        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="twentyOneStopToolsChart" class="chart"></div></div>
-        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="twentyOneIdentityChart" class="chart"></div></div>
-        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="twentyOneEcosystemChart" class="chart"></div></div>
-        <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי מתוך 100</p><div id="twentyOneSatisfactionChart" class="chart"></div></div>
-        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="twentyOneAnchorChart" class="chart"></div></div>
-      </div>
-
-      <h3 class="section-title">שאלות פתוחות</h3>
-      <div class="twenty-one-question"><label for="twentyOneLearned">מה למדתי על עצמי?</label><textarea id="twentyOneLearned"></textarea></div>
-      <div class="twenty-one-question"><label for="twentyOneTrigger">איזה טריגר חוזר על עצמו?</label><textarea id="twentyOneTrigger"></textarea></div>
-      <div class="twenty-one-question"><label for="twentyOnePattern">איזה דפוס חוזר על עצמו?</label><textarea id="twentyOnePattern"></textarea></div>
-      <div class="twenty-one-question"><label for="twentyOneChange">האם משהו השתנה בי ובחיים שלי עד כה ואם כן מה?</label><textarea id="twentyOneChange"></textarea></div>
-      <div class="daily-actions"><button id="saveTwentyOneBtn" type="button" class="button-blue">שמור סיכום 21 יום</button><span id="twentyOneSaveStatus" class="muted"></span></div>
-    </div>
-  </div>
-
-  <div id="fortyTwoView" class="forty-two-view" hidden>
-    <button id="backFromFortyTwoBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
-    <div class="dashboard-shell">
-      <div class="dashboard-header"><h2>סיכום 42 יום</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">42 יום</span></div>
-      <p class="muted">ששת הגרפים מציגים את נתוני ששת השבועות האחרונים מתוך השאלונים היומיים שנשמרו.</p>
-      <div class="charts-grid">
-        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין ששת השבועות</p><div id="fortyTwoTriggersChart" class="chart"></div></div>
-        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="fortyTwoStopToolsChart" class="chart"></div></div>
-        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="fortyTwoIdentityChart" class="chart"></div></div>
-        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="fortyTwoEcosystemChart" class="chart"></div></div>
-        <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי מתוך 100</p><div id="fortyTwoSatisfactionChart" class="chart"></div></div>
-        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="fortyTwoAnchorChart" class="chart"></div></div>
-      </div>
-      <h3 class="section-title">שאלות פתוחות</h3>
-      <div class="twenty-one-question"><label for="fortyTwoChange">איזה שינוי התחלתי להרגיש?</label><textarea id="fortyTwoChange"></textarea></div>
-      <div class="twenty-one-question"><label for="fortyTwoBehavior">איזו התנהגות חדשה מתחילה להיות טבעית יותר?</label><textarea id="fortyTwoBehavior"></textarea></div>
-      <div class="twenty-one-question"><label for="fortyTwoTrigger">מה עדיין מפעיל אותי מאוד?</label><textarea id="fortyTwoTrigger"></textarea></div>
-      <div class="twenty-one-question"><label for="fortyTwoBoundary">איזה גבול אני רוצה לחזק?</label><textarea id="fortyTwoBoundary"></textarea></div>
-      <div class="daily-actions"><button id="saveFortyTwoBtn" type="button" class="button-blue">שמור סיכום 42 יום</button><span id="fortyTwoSaveStatus" class="muted"></span></div>
-    </div>
-  </div>
-
-  <div id="sixtyThreeView" class="sixty-three-view" hidden>
-    <button id="backFromSixtyThreeBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
-    <div class="dashboard-shell">
-      <div class="dashboard-header"><h2>סיכום 63 ימים</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">63 יום</span></div>
-      <p class="muted">ששת הגרפים מציגים את נתוני תשעת השבועות האחרונים מתוך השאלונים היומיים שנשמרו.</p>
-      <div class="charts-grid">
-        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין תשעת השבועות</p><div id="sixtyThreeTriggersChart" class="chart"></div></div>
-        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="sixtyThreeStopToolsChart" class="chart"></div></div>
-        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="sixtyThreeIdentityChart" class="chart"></div></div>
-        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="sixtyThreeEcosystemChart" class="chart"></div></div>
-        <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי מתוך 100</p><div id="sixtyThreeSatisfactionChart" class="chart"></div></div>
-        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="sixtyThreeAnchorChart" class="chart"></div></div>
-      </div>
-
-      <div class="sixty-three-intro">
-        <p><strong>כל הכבוד לך!!!!!</strong> 63 הימים המהותיים של התהליך מאחורייך ואני כל כך מקווה שהגעת לנקודה שבה את מרגישה כבר משהו מהתהליך הזה שקורה בתוכך.</p>
-        <p>החיווט מחדש הפיזי ממש שמתרחש במח ומייצר אוטומטיים חדשים ומחליש אוטומטיים ישנים.</p>
-        <p>היציאה לדרך הזו של חיווט מחדש למרות ההתמכרות העוצמתית של הגוף והנפש הרגישה לקורטיזול היא צעד אמיץ שעשית לפני 63 ימים והעובדה שאת עומדת כאן בנקודה הזו אחרי התמדה ומאמץ לטפס את ההר הזה כנגד כח הכבידה ממש היא סיבה אמיתית למסיבה וחגיגת הישגים!!</p>
-        <p>לכן בחלק הראשון של סיכום 63 ימים אני רוצה שתגידי לעצמך כמה מילים טובות:</p>
-      </div>
-
-      <h3 class="section-title">מילים טובות והתבוננות</h3>
-      <div class="twenty-one-question"><label for="sixtyThreeChallenges">מול אילו אתגרים עמדתי בימים האלה?</label><textarea id="sixtyThreeChallenges"></textarea></div>
-      <div class="twenty-one-question"><label for="sixtyThreeEvents">אילו אירועים עמדו בדרך של ההתמדה שלי?</label><textarea id="sixtyThreeEvents"></textarea></div>
-      <div class="twenty-one-question"><label for="sixtyThreeDifficultPeople">מי האנשים שהקשו עלי ללכת בדרך הזו?</label><textarea id="sixtyThreeDifficultPeople"></textarea></div>
-      <div class="twenty-one-question"><label for="sixtyThreeSupporters">מי האנשים שתמכו בי ועזרו לי להתמיד בתהליך?</label><textarea id="sixtyThreeSupporters"></textarea></div>
-      <div class="twenty-one-question"><label for="sixtyThreeLifeChange">איפה אני יכולה לראות בברור בחיים את השינוי ואת ההשפעה שלו?</label><textarea id="sixtyThreeLifeChange"></textarea></div>
-      <div class="twenty-one-question"><label for="sixtyThreeFocus">איפה עדיין יש לי עבודה לעשות ואני רוצה לשים עליה דגש?</label><textarea id="sixtyThreeFocus"></textarea></div>
-
-      <h3 class="section-title">כתיבה לחידוד ההתבוננות</h3>
-      <div class="twenty-one-question"><label for="sixtyThreeFeel">אחרי 63 יום אני מרגישה ש…</label><textarea id="sixtyThreeFeel"></textarea></div>
-      <div class="twenty-one-question"><label for="sixtyThreeLearned">ב-63 יום למדתי ש…</label><textarea id="sixtyThreeLearned"></textarea></div>
-      <div class="twenty-one-question"><label for="sixtyThreeBoundaries">מקומות שבהם למדתי להציב גבולות הם</label><textarea id="sixtyThreeBoundaries"></textarea></div>
-      <div class="twenty-one-question"><label for="sixtyThreeBeliefs">אמונות וערכים שהשתנו אצלי</label><textarea id="sixtyThreeBeliefs"></textarea></div>
-      <div class="daily-actions"><button id="saveSixtyThreeBtn" type="button" class="button-blue">שמור סיכום 63 יום</button><span id="sixtyThreeSaveStatus" class="muted"></span></div>
+      <div class="stage-card" data-stage="weekly" id="openWeeklyBtn"><h3>שבועי</h3><div class="progress"><span style="width:71%"></span></div></div>
+      <div class="stage-card" data-stage="monthly" id="openMonthlyBtn"><h3>חודשי</h3><div class="progress"><span style="width:7%"></span></div></div>
+      <div class="stage-card" data-stage="yearly" id="openYearlyBtn"><h3>שנתי</h3><div class="progress"><span style="width:0%"></span></div></div>
     </div>
   </div>
 
@@ -254,7 +166,7 @@
         <div class="weekly-stat"><strong id="weeklyTriggerTotal">0</strong><span>מספר זיהויים</span></div>
         <div class="weekly-stat"><strong id="weeklyStopTool">אין נתונים</strong><span>תרגיל עצירה מרכזי</span></div>
         <div class="weekly-stat"><strong id="weeklyIdentityTotal">0</strong><span>מספר החלפות</span></div>
-        <div class="weekly-stat"><strong id="weeklyEcosystem">אין נתונים</strong><span>אקו סיסטם תומך מרכזי</span></div>
+        <div class="weekly-stat"><strong id="weeklyEcosystem">אין נתונים</strong><span>מערך תומך מרכזי</span></div>
         <div class="weekly-stat"><strong id="weeklySatisfaction">0</strong><span>שביעות רצון ממוצעת</span></div>
       </div>
 
@@ -290,16 +202,9 @@
         <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין ארבעת השבועות</p><div id="monthlyTriggersChart" class="chart"></div></div>
         <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="monthlyStopToolsChart" class="chart"></div></div>
         <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="monthlyIdentityChart" class="chart"></div></div>
-        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="monthlyEcosystemChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מערך תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="monthlyEcosystemChart" class="chart"></div></div>
         <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי בכל שבוע מתוך 100</p><div id="monthlySatisfactionChart" class="chart"></div></div>
         <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="monthlyAnchorChart" class="chart"></div></div>
-      </div>
-      <div class="sixty-three-intro">
-        <p>שינוי אמיתי אינו מסתיים ביום ה-63.</p>
-        <p>לא משום שאנחנו "מקולקלים" וצריכים לתקן את עצמנו כל הזמן.</p>
-        <p>אלא משום שהדפוסים הישנים היו רגילים להיות שם כל כך הרבה זמן ללא הפרעה, מייצרים בתוכנו התמכרות לקורטיזול שמגיע יחד איתם - שהשמירה על השינוי מול העוצמה שהם הוא משימה לא קלה בכלל.</p>
-        <p>לכן חשוב ליצור תחזוקה חודשית שוטפת אחרי 63 הימים הראשונים באופן הבא:</p>
-        <p><strong>פעם בחודש שאלי את עצמך:</strong></p>
       </div>
       <h3 class="section-title">שאלות תחזוקה חודשית</h3>
       <div class="twenty-one-question"><label for="monthlyPeoplePleasing">איפה אני מרצה לאחרונה?</label><textarea id="monthlyPeoplePleasing"></textarea></div>
@@ -321,7 +226,7 @@
         <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין ארבעת הרבעונים</p><div id="yearlyTriggersChart" class="chart"></div></div>
         <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל רבעון</p><div id="yearlyStopToolsChart" class="chart"></div></div>
         <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל רבעון</p><div id="yearlyIdentityChart" class="chart"></div></div>
-        <div class="chart-card"><h3>אקו סיסטם תומך</h3><p>התמיכה המרכזית בכל רבעון</p><div id="yearlyEcosystemChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מערך תומך</h3><p>התמיכה המרכזית בכל רבעון</p><div id="yearlyEcosystemChart" class="chart"></div></div>
         <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי בכל רבעון מתוך 100</p><div id="yearlySatisfactionChart" class="chart"></div></div>
         <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל רבעון</p><div id="yearlyAnchorChart" class="chart"></div></div>
       </div>
@@ -391,7 +296,22 @@
       </div>
     </div>
 
-    <label>3. בחירת משפט עוגן יומי מתוך רשימה</label>
+    <label>3. עשו תרגיל אחד של אהבה וחמלה עצמית: בחרו מתוך הרשימה או הוסיפו אחד משלכם</label>
+    <div class="highlight">
+      <select id="selfCompassionExercise" onchange="document.getElementById('selfCompassionExerciseOther').style.display=(this.value==='other'?'block':'none')">
+        <option value="">-- בחרו תרגיל --</option>
+        <option>הביטו במראה ואמרו לעצמכם - כל הכבוד לי על _____</option>
+        <option>הביטו במראה ובחרו משהו אחד שאתם אוהבים בעצמכם או גאים בו - פיזית או בתחום אחר</option>
+        <option>שאלו את עצמכם אם הייתם מישהו אחר שאוהב אתכם מה הייתם אומרים לעצמכם עכשיו ואמרו את זה לעצמכם</option>
+        <option>תרגיל אחר שבחרתם</option>
+        <option value="other">אחר...</option>
+      </select>
+      <div id="selfCompassionExerciseOther" style="display:none;margin-top:10px">
+        <input type="text" id="selfCompassionExerciseOtherText" placeholder="כאן צריך להיות מקום לכתוב את התרגיל" />
+      </div>
+    </div>
+
+    <label>4. בחירת משפט עוגן יומי מתוך רשימה</label>
     <div class="highlight">
       <select id="anchor" onchange="document.getElementById('anchorOther').style.display=(this.value==='other'?'block':'none')">
         <option value="">-- בחר משפט עוגן --</option>
@@ -416,12 +336,7 @@
   <section>
     <h2>תרגול במהלך היום</h2>
 
-    <label>יצירת תזכורת בשעה</label>
-    <div class="highlight">
-      <input type="time" id="reminderTime" value="09:00" />
-    </div>
-
-    <label style="margin-top:18px">תרגול זיהוי</label>
+    <label style="margin-top:18px">ספירת זיהוי</label>
     <div class="muted">סמן בכל פעם שאת מזהה מחשבה מחלישה</div>
     <div class="highlight" style="margin-top:10px;display:grid;grid-template-columns:auto auto;gap:10px;align-items:center">
       <div style="font-weight:700;color:#022f57">זיהיתי עד כה</div>
@@ -434,8 +349,21 @@
     <div style="margin-top:10px">
       <textarea id="recognitionDetails" placeholder="פירוט זיהוי: מתי קרה, מה המחשבה שהחלה"></textarea>
       <div style="margin-top:10px">
-        <label>תרגול עצירה - באיזה כלי עצירה השתמשתי?</label>
-        <input type="text" id="stopToolText" placeholder="למשל: נשימות, ספירה, דיבור פנימי" />
+        <label>תרגול עצירה</label>
+        <select id="stopToolText">
+          <option value="">-- בחר כלי עצירה --</option>
+          <option>אמירה בלב או בקול של משפטי עצירה כמו "לא תודה" לא עכשיו"</option>
+          <option>ספירה עד 5 בקול או בלב</option>
+          <option>כפתור השהייה</option>
+          <option>ללכת בדמיון למקום בטוח</option>
+          <option>ספירת נשימות</option>
+          <option>לגעת בלב/בבטן</option>
+          <option>לעשות תנועה קטנה</option>
+          <option>לעצור ולשתות מים</option>
+          <option>לנער את הגוף</option>
+          <option>להתמקד בעוגן ויזואלי בסביבה</option>
+          <option>לעשות משהו להסחת דעת</option>
+        </select>
       </div>
     </div>
 
@@ -458,22 +386,39 @@
 
     <label style="margin-top:14px">תרגול יצירת זהות חדשה</label>
     <textarea id="newIdentityBehavior" placeholder="כתוב כאן התנהגות של זהות חדשה"></textarea>
-
-    <label style="margin-top:14px">תמיכת אקו־סיסטם - במה השתמשתי היום</label>
-    <div class="checkboxes">
-      <label class="chip"><input type="checkbox" id="ecosystemPhysical" /> פעילות גופנית</label>
-      <label class="chip"><input type="checkbox" id="ecosystemNutrition" /> תזונה בריאה</label>
-      <label class="chip"><input type="checkbox" id="ecosystemCreativity" /> יצירה</label>
-      <label class="chip"><input type="checkbox" id="ecosystemMeaning" /> משמעות</label>
-      <label class="chip"><input type="checkbox" id="ecosystemHuman" /> סביבה אנושית</label>
-      <label class="chip"><input type="checkbox" id="ecosystemEnvironment" /> סביבה פיזית</label>
-    </div>
   </section>
 
   <section>
     <h2>תרגול סוף יום</h2>
 
-    <label>מה היה הרגע המאתגר ביותר היום?</label>
+    <label>טריגרים שהפעילו אותי היום - בחירה מתוך רשימה:</label>
+    <div class="highlight">
+      <select id="triggersActivatedToday" multiple size="12" style="min-height:220px">
+        <option value="ביקורת, דחייה או חוסר תגובה מאנשים">ביקורת, דחייה או חוסר תגובה מאנשים</option>
+        <option value="השוואה לזולת – במיוחד ברשתות חברתיות">השוואה לזולת – במיוחד ברשתות חברתיות</option>
+        <option value="אנשים רעילים שמייצרים גזלייטינג">אנשים רעילים שמייצרים גזלייטינג</option>
+        <option value="כישלון או טעות גלויה">כישלון או טעות גלויה</option>
+        <option value="חדשות שליליות או תוכן מדכא">חדשות שליליות או תוכן מדכא</option>
+        <option value="סביבה פיזית – רעש, בלגן, תאורה חלשה או חדר סגור">סביבה פיזית – רעש, בלגן, תאורה חלשה או חדר סגור</option>
+        <option value="שינויים פתאומיים או חוסר ודאות">שינויים פתאומיים או חוסר ודאות</option>
+        <option value="לחץ חיצוני – דדליינים ודרישות גבוהות">לחץ חיצוני – דדליינים ודרישות גבוהות</option>
+        <option value="בדידות או תחושת ניתוק">בדידות או תחושת ניתוק</option>
+        <option value="גירויים חושיים – ריחות, צלילים או מראות מזכירים חוויות שליליות">גירויים חושיים – ריחות, צלילים או מראות מזכירים חוויות שליליות</option>
+        <option value="עייפות פיזית או נפשית (חוסר שינה, תשישות, שחיקה)">עייפות פיזית או נפשית (חוסר שינה, תשישות, שחיקה)</option>
+        <option value="רעב, צמא או חוסר איזון פיזיולוגי">רעב, צמא או חוסר איזון פיזיולוגי</option>
+        <option value='זיכרונות או "פלאשבקים" של אירועים שליליים מהעבר'>זיכרונות או "פלאשבקים" של אירועים שליליים מהעבר</option>
+        <option value="דפוסי חשיבה שליליים (קטסטרופיזציה, הכללה, קריאת מחשבות)">דפוסי חשיבה שליליים (קטסטרופיזציה, הכללה, קריאת מחשבות)</option>
+        <option value="פרפקציוניזם או ציפיות גבוהות מדי מעצמך">פרפקציוניזם או ציפיות גבוהות מדי מעצמך</option>
+        <option value="חרדה או דאגה לגבי העתיד">חרדה או דאגה לגבי העתיד</option>
+        <option value="תחושת ערך עצמי נמוך או ביקורת עצמית חזקה">תחושת ערך עצמי נמוך או ביקורת עצמית חזקה</option>
+        <option value="שעמום או חוסר משמעות">שעמום או חוסר משמעות</option>
+        <option value="שינויים הורמונליים (מחזור, הריון, גיל המעבר, תרופות)">שינויים הורמונליים (מחזור, הריון, גיל המעבר, תרופות)</option>
+        <option value="רגשות לא מעובדים (כעס, עצב, אשמה, בושה)">רגשות לא מעובדים (כעס, עצב, אשמה, בושה)</option>
+        <option value="חוסר ודאות או תחושת אובדן שליטה">חוסר ודאות או תחושת אובדן שליטה</option>
+      </select>
+    </div>
+
+    <label style="margin-top:18px">מה היה הרגע המאתגר ביותר היום?</label>
     <textarea id="difficultMoment" placeholder="תאר את הרגע המאתגר"></textarea>
 
     <label>מה חשבתי באותו רגע?</label>
@@ -481,6 +426,9 @@
 
     <label>מה עזר לי לעצור ולהחליף מחשבה?</label>
     <textarea id="whatHelped" placeholder="כלים, אנשים, מילים שעזרו"></textarea>
+
+    <label>באיזו מחשבה חליפית השתמשתי?</label>
+    <textarea id="alternativeThought" placeholder="רשום את המחשבה החלופית שהשתמשת בה"></textarea>
 
     <div style="margin-top:12px;">
       <label>הכרת תודה על דברים שקרו היום</label>
@@ -506,7 +454,7 @@
     <label>איך זה הרגיש?</label>
     <textarea id="howItFelt" placeholder="רגש גופני ורגשי"></textarea>
 
-    <label>בכמה עזרה לי תמיכת האקו־סיסטם שלי? 1-10</label>
+    <label>עד כמה עזרו לי מערך התמיכה לעשות שינוי? 1-10</label>
     <div class="rating" style="display:flex;align-items:center;gap:12px">
       <input type="range" id="supportRating" min="1" max="10" value="5" />
       <span class="muted">בחר 1-10</span>
@@ -601,6 +549,12 @@
       }
     }
 
+    function getSelectedTriggerValues() {
+      const select = document.getElementById('triggersActivatedToday');
+      if (!select) return [];
+      return Array.from(select.selectedOptions).map(option => option.value);
+    }
+
     function getFormData() {
       return {
         date: document.getElementById('entryDate').value,
@@ -608,11 +562,10 @@
         gratitudeSaid: document.getElementById('gratitudeSaid').checked,
         mantraText: document.getElementById('mantraText').value,
         mantraSaid: document.getElementById('mantraSaid').checked,
+        selfCompassionExercise: document.getElementById('selfCompassionExercise') ? document.getElementById('selfCompassionExercise').value : '',
+        selfCompassionExerciseOtherText: document.getElementById('selfCompassionExerciseOtherText') ? document.getElementById('selfCompassionExerciseOtherText').value : '',
         anchor: document.getElementById('anchor').value,
         anchorOtherText: document.getElementById('anchorOtherText').value,
-        reminderTime: document.getElementById('reminderTime') ? document.getElementById('reminderTime').value : '',
-        triggerText: document.getElementById('triggerText') ? document.getElementById('triggerText').value : '',
-        triggerSaid: document.getElementById('triggerSaid') ? document.getElementById('triggerSaid').checked : false,
         triggerCount: parseInt(document.getElementById('triggerCount').textContent, 10) || 0,
         recognitionDetails: document.getElementById('recognitionDetails').value,
         stopToolText: document.getElementById('stopToolText').value,
@@ -620,15 +573,11 @@
         identityNew: document.getElementById('identityNew').value,
         identitySuccessCount: parseInt(document.getElementById('identitySuccessCount').textContent, 10) || 0,
         newIdentityBehavior: document.getElementById('newIdentityBehavior').value,
-        ecosystemPhysical: document.getElementById('ecosystemPhysical').checked,
-        ecosystemNutrition: document.getElementById('ecosystemNutrition').checked,
-        ecosystemCreativity: document.getElementById('ecosystemCreativity').checked,
-        ecosystemMeaning: document.getElementById('ecosystemMeaning').checked,
-        ecosystemHuman: document.getElementById('ecosystemHuman').checked,
-        ecosystemEnvironment: document.getElementById('ecosystemEnvironment').checked,
+        triggersActivatedToday: getSelectedTriggerValues(),
         difficultMoment: document.getElementById('difficultMoment').value,
         thoughtAtMoment: document.getElementById('thoughtAtMoment').value,
         whatHelped: document.getElementById('whatHelped').value,
+        alternativeThought: document.getElementById('alternativeThought').value,
         gratitudeTodayText: document.getElementById('gratitudeTodayText').value,
         thanksToday: document.getElementById('thanksToday').checked,
         mantraTodayText: document.getElementById('mantraTodayText').value,
@@ -647,12 +596,15 @@
       document.getElementById('gratitudeSaid').checked = data.gratitudeSaid || false;
       document.getElementById('mantraText').value = data.mantraText || '';
       document.getElementById('mantraSaid').checked = data.mantraSaid || false;
+      const selfCompassionExercise = document.getElementById('selfCompassionExercise');
+      if (selfCompassionExercise) selfCompassionExercise.value = data.selfCompassionExercise || '';
+      const selfCompassionExerciseOther = document.getElementById('selfCompassionExerciseOther');
+      const selfCompassionExerciseOtherText = document.getElementById('selfCompassionExerciseOtherText');
+      if (selfCompassionExerciseOther) selfCompassionExerciseOther.style.display = data.selfCompassionExercise === 'other' ? 'block' : 'none';
+      if (selfCompassionExerciseOtherText) selfCompassionExerciseOtherText.value = data.selfCompassionExerciseOtherText || '';
       document.getElementById('anchor').value = data.anchor || '';
       document.getElementById('anchorOtherText').value = data.anchorOtherText || '';
       document.getElementById('anchorOther').style.display = data.anchor === 'other' ? 'block' : 'none';
-      if (document.getElementById('reminderTime')) document.getElementById('reminderTime').value = data.reminderTime || '09:00';
-      if (document.getElementById('triggerText')) document.getElementById('triggerText').value = data.triggerText || '';
-      if (document.getElementById('triggerSaid')) document.getElementById('triggerSaid').checked = data.triggerSaid || false;
       document.getElementById('triggerCount').textContent = data.triggerCount || 0;
       document.getElementById('recognitionDetails').value = data.recognitionDetails || '';
       document.getElementById('stopToolText').value = data.stopToolText || '';
@@ -660,15 +612,16 @@
       document.getElementById('identityNew').value = data.identityNew || '';
       document.getElementById('identitySuccessCount').textContent = data.identitySuccessCount || 0;
       document.getElementById('newIdentityBehavior').value = data.newIdentityBehavior || '';
-      document.getElementById('ecosystemPhysical').checked = data.ecosystemPhysical || false;
-      document.getElementById('ecosystemNutrition').checked = data.ecosystemNutrition || false;
-      document.getElementById('ecosystemCreativity').checked = data.ecosystemCreativity || false;
-      document.getElementById('ecosystemMeaning').checked = data.ecosystemMeaning || false;
-      document.getElementById('ecosystemHuman').checked = data.ecosystemHuman || false;
-      document.getElementById('ecosystemEnvironment').checked = data.ecosystemEnvironment || false;
+      const triggerSelect = document.getElementById('triggersActivatedToday');
+      if (triggerSelect) {
+        Array.from(triggerSelect.options).forEach(option => {
+          option.selected = Array.isArray(data.triggersActivatedToday) && data.triggersActivatedToday.includes(option.value);
+        });
+      }
       document.getElementById('difficultMoment').value = data.difficultMoment || '';
       document.getElementById('thoughtAtMoment').value = data.thoughtAtMoment || '';
       document.getElementById('whatHelped').value = data.whatHelped || '';
+      document.getElementById('alternativeThought').value = data.alternativeThought || '';
       document.getElementById('gratitudeTodayText').value = data.gratitudeTodayText || '';
       document.getElementById('thanksToday').checked = data.thanksToday || false;
       document.getElementById('mantraTodayText').value = data.mantraTodayText || '';
@@ -710,12 +663,15 @@
       document.getElementById('gratitudeSaid').checked = false;
       document.getElementById('mantraText').value = '';
       document.getElementById('mantraSaid').checked = false;
+      const selfCompassionExercise = document.getElementById('selfCompassionExercise');
+      if (selfCompassionExercise) selfCompassionExercise.value = '';
+      const selfCompassionExerciseOther = document.getElementById('selfCompassionExerciseOther');
+      const selfCompassionExerciseOtherText = document.getElementById('selfCompassionExerciseOtherText');
+      if (selfCompassionExerciseOther) selfCompassionExerciseOther.style.display = 'none';
+      if (selfCompassionExerciseOtherText) selfCompassionExerciseOtherText.value = '';
       document.getElementById('anchor').value = '';
       document.getElementById('anchorOtherText').value = '';
       document.getElementById('anchorOther').style.display = 'none';
-      if (document.getElementById('reminderTime')) document.getElementById('reminderTime').value = '09:00';
-      if (document.getElementById('triggerText')) document.getElementById('triggerText').value = '';
-      if (document.getElementById('triggerSaid')) document.getElementById('triggerSaid').checked = false;
       document.getElementById('triggerCount').textContent = '0';
       document.getElementById('recognitionDetails').value = '';
       document.getElementById('stopToolText').value = '';
@@ -723,15 +679,14 @@
       document.getElementById('identityNew').value = '';
       document.getElementById('identitySuccessCount').textContent = '0';
       document.getElementById('newIdentityBehavior').value = '';
-      document.getElementById('ecosystemPhysical').checked = false;
-      document.getElementById('ecosystemNutrition').checked = false;
-      document.getElementById('ecosystemCreativity').checked = false;
-      document.getElementById('ecosystemMeaning').checked = false;
-      document.getElementById('ecosystemHuman').checked = false;
-      document.getElementById('ecosystemEnvironment').checked = false;
+      const triggerSelect = document.getElementById('triggersActivatedToday');
+      if (triggerSelect) {
+        Array.from(triggerSelect.options).forEach(option => { option.selected = false; });
+      }
       document.getElementById('difficultMoment').value = '';
       document.getElementById('thoughtAtMoment').value = '';
       document.getElementById('whatHelped').value = '';
+      document.getElementById('alternativeThought').value = '';
       document.getElementById('gratitudeTodayText').value = '';
       document.getElementById('thanksToday').checked = false;
       document.getElementById('mantraTodayText').value = '';
@@ -1197,7 +1152,7 @@
         <div>ימים שמורים: ${summary.days}</div>
         <div>סך כל זיהויים של טריגרים: ${summary.totalTriggerCount}</div>
         <div>ממוצע רמת שביעות רצון: ${summary.averageSatisfaction} מתוך 100</div>
-        <div>ממוצע תמיכת אקו־סיסטם: ${summary.averageSupport} מתוך 10</div>
+        <div>ממוצע תמיכת מערך התומך: ${summary.averageSupport} מתוך 10</div>
         <div>ימים שבהם אמרתי הכרת תודה בבוקר: ${summary.gratitudeDays}</div>
         <div>ימים שבהם אמרתי מנטרות בבוקר: ${summary.mantraDays}</div>
         <div>ימים שבהם בחרתי משפט עוגן: ${summary.anchorSet}</div>
@@ -1211,10 +1166,9 @@
         'gratitudeSaid',
         'mantraText',
         'mantraSaid',
+        'selfCompassionExercise',
         'anchor',
         'anchorOtherText',
-        'triggerText',
-        'triggerSaid',
         'triggerCount',
         'recognitionDetails',
         'stopToolText',
@@ -1222,15 +1176,11 @@
         'identityNew',
         'identitySuccessCount',
         'newIdentityBehavior',
-        'ecosystemPhysical',
-        'ecosystemNutrition',
-        'ecosystemCreativity',
-        'ecosystemMeaning',
-        'ecosystemHuman',
-        'ecosystemEnvironment',
+        'triggersActivatedToday',
         'difficultMoment',
         'thoughtAtMoment',
         'whatHelped',
+        'alternativeThought',
         'gratitudeTodayText',
         'thanksToday',
         'mantraTodayText',
@@ -1303,9 +1253,6 @@
     function showDailyView() {
       document.getElementById('dashboard').hidden = true;
       document.getElementById('weeklyView').hidden = true;
-      document.getElementById('twentyOneView').hidden = true;
-      document.getElementById('fortyTwoView').hidden = true;
-      document.getElementById('sixtyThreeView').hidden = true;
       document.getElementById('monthlyView').hidden = true;
       document.getElementById('yearlyView').hidden = true;
       document.getElementById('dailyView').hidden = false;
@@ -1314,9 +1261,6 @@
     function showDashboard() {
       document.getElementById('dailyView').hidden = true;
       document.getElementById('weeklyView').hidden = true;
-      document.getElementById('twentyOneView').hidden = true;
-      document.getElementById('fortyTwoView').hidden = true;
-      document.getElementById('sixtyThreeView').hidden = true;
       document.getElementById('monthlyView').hidden = true;
       document.getElementById('yearlyView').hidden = true;
       document.getElementById('dashboard').hidden = false;
@@ -1325,9 +1269,6 @@
     function showWeeklyView() {
       document.getElementById('dashboard').hidden = true;
       document.getElementById('dailyView').hidden = true;
-      document.getElementById('twentyOneView').hidden = true;
-      document.getElementById('fortyTwoView').hidden = true;
-      document.getElementById('sixtyThreeView').hidden = true;
       document.getElementById('monthlyView').hidden = true;
       document.getElementById('yearlyView').hidden = true;
       document.getElementById('weeklyView').hidden = false;
@@ -1335,54 +1276,12 @@
       loadWeeklyReflection();
     }
 
-    function showTwentyOneView() {
-      document.getElementById('dashboard').hidden = true;
-      document.getElementById('dailyView').hidden = true;
-      document.getElementById('weeklyView').hidden = true;
-      document.getElementById('twentyOneView').hidden = false;
-      document.getElementById('fortyTwoView').hidden = true;
-      document.getElementById('sixtyThreeView').hidden = true;
-      document.getElementById('monthlyView').hidden = true;
-      document.getElementById('yearlyView').hidden = true;
-      renderTwentyOneCharts();
-      loadTwentyOneReflection();
-    }
-
-    function showFortyTwoView() {
-      document.getElementById('dashboard').hidden = true;
-      document.getElementById('dailyView').hidden = true;
-      document.getElementById('weeklyView').hidden = true;
-      document.getElementById('twentyOneView').hidden = true;
-      document.getElementById('fortyTwoView').hidden = false;
-      document.getElementById('sixtyThreeView').hidden = true;
-      document.getElementById('monthlyView').hidden = true;
-      document.getElementById('yearlyView').hidden = true;
-      renderFortyTwoCharts();
-      loadFortyTwoReflection();
-    }
-
-    function showSixtyThreeView() {
-      document.getElementById('dashboard').hidden = true;
-      document.getElementById('dailyView').hidden = true;
-      document.getElementById('weeklyView').hidden = true;
-      document.getElementById('twentyOneView').hidden = true;
-      document.getElementById('fortyTwoView').hidden = true;
-      document.getElementById('sixtyThreeView').hidden = false;
-      document.getElementById('monthlyView').hidden = true;
-      document.getElementById('yearlyView').hidden = true;
-      renderPeriodCharts('sixtyThree', 63);
-      loadSixtyThreeReflection();
-    }
-
     function showMonthlyView() {
       document.getElementById('dashboard').hidden = true;
       document.getElementById('dailyView').hidden = true;
       document.getElementById('weeklyView').hidden = true;
-      document.getElementById('twentyOneView').hidden = true;
-      document.getElementById('fortyTwoView').hidden = true;
-      document.getElementById('sixtyThreeView').hidden = true;
-      document.getElementById('monthlyView').hidden = false;
       document.getElementById('yearlyView').hidden = true;
+      document.getElementById('monthlyView').hidden = false;
       renderMonthlyCharts();
       loadMonthlyReflection();
     }
@@ -1391,9 +1290,6 @@
       document.getElementById('dashboard').hidden = true;
       document.getElementById('dailyView').hidden = true;
       document.getElementById('weeklyView').hidden = true;
-      document.getElementById('twentyOneView').hidden = true;
-      document.getElementById('fortyTwoView').hidden = true;
-      document.getElementById('sixtyThreeView').hidden = true;
       document.getElementById('monthlyView').hidden = true;
       document.getElementById('yearlyView').hidden = false;
       renderPeriodCharts('yearly', 364, 4, ['רבעון 1', 'רבעון 2', 'רבעון 3', 'רבעון 4']);
@@ -1405,15 +1301,6 @@
     document.getElementById('openWeeklyBtn').addEventListener('click', showWeeklyView);
     document.getElementById('backFromWeeklyBtn').addEventListener('click', showDashboard);
     document.getElementById('saveWeeklyBtn').addEventListener('click', saveWeeklyReflection);
-    document.getElementById('openTwentyOneBtn').addEventListener('click', showTwentyOneView);
-    document.getElementById('backFromTwentyOneBtn').addEventListener('click', showDashboard);
-    document.getElementById('saveTwentyOneBtn').addEventListener('click', saveTwentyOneReflection);
-    document.getElementById('openFortyTwoBtn').addEventListener('click', showFortyTwoView);
-    document.getElementById('backFromFortyTwoBtn').addEventListener('click', showDashboard);
-    document.getElementById('saveFortyTwoBtn').addEventListener('click', saveFortyTwoReflection);
-    document.getElementById('openSixtyThreeBtn').addEventListener('click', showSixtyThreeView);
-    document.getElementById('backFromSixtyThreeBtn').addEventListener('click', showDashboard);
-    document.getElementById('saveSixtyThreeBtn').addEventListener('click', saveSixtyThreeReflection);
     document.getElementById('openMonthlyBtn').addEventListener('click', showMonthlyView);
     document.getElementById('backFromMonthlyBtn').addEventListener('click', showDashboard);
     document.getElementById('saveMonthlyBtn').addEventListener('click', saveMonthlyReflection);
