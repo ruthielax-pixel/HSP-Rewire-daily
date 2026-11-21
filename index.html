@@ -187,6 +187,7 @@
     .top-triggers .bar-row{display:flex;align-items:center;gap:10px}
     .top-triggers .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--navy-700),var(--gold-500))}
     .empty-note{padding:30px 10px;text-align:center;color:var(--muted)}
+    .anchor-saved{color:var(--success);font-weight:700;font-size:.95rem}
     .anchor-card{margin-bottom:18px;padding:20px 22px;border-radius:18px;background:linear-gradient(135deg,var(--navy-700),var(--navy-900));color:#fff;box-shadow:var(--shadow);position:relative}
     .anchor-card .anchor-label{display:block;color:var(--gold-400);font-weight:700;font-size:.95rem;margin-bottom:6px}
     .anchor-card .anchor-text{display:block;font-size:1.35rem;font-weight:700;line-height:1.5}
@@ -284,7 +285,7 @@
     <button id="backFromWeeklyBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
     <div class="dashboard-shell">
       <div class="dashboard-header"><h2>סיכום ורפלקציה שבועי</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">השבוע שלי</span></div>
-      <p class="muted">עכשיו נעבור לחלק של הסיכום השבועי.</p>
+      <p class="muted">סיכום השבוע הנוכחי (ראשון עד שבת): <strong id="weeklyRangeLabel"></strong></p>
 
       <div class="weekly-summary-grid">
         <div class="weekly-stat"><strong id="weeklyTriggerTotal">0</strong><span>מספר זיהויים</span></div>
@@ -321,14 +322,14 @@
     <button id="backFromMonthlyBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
     <div class="dashboard-shell">
       <div class="dashboard-header"><h2>תחזוקה חודשית</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">חודשי</span></div>
-      <p class="muted">סיכום ארבעת השבועות האחרונים מתוך השאלונים היומיים שנשמרו.</p>
+      <p class="muted">סיכום החודש מתוך השאלונים היומיים שנשמרו: <strong id="monthlyRangeLabel"></strong></p>
       <div class="charts-grid">
-        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין ארבעת השבועות</p><div id="monthlyTriggersChart" class="chart"></div></div>
-        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע</p><div id="monthlyStopToolsChart" class="chart"></div></div>
-        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע</p><div id="monthlyIdentityChart" class="chart"></div></div>
-        <div class="chart-card"><h3>מערך תומך</h3><p>התמיכה המרכזית בכל שבוע</p><div id="monthlyEcosystemChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר הזיהויים</h3><p>לפי שבועות החודש</p><div id="monthlyTriggersChart" class="chart"></div></div>
+        <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל שבוע בחודש</p><div id="monthlyStopToolsChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל שבוע בחודש</p><div id="monthlyIdentityChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מערך תומך</h3><p>התמיכה המרכזית בכל שבוע בחודש</p><div id="monthlyEcosystemChart" class="chart"></div></div>
         <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי בכל שבוע מתוך 100</p><div id="monthlySatisfactionChart" class="chart"></div></div>
-        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע</p><div id="monthlyAnchorChart" class="chart"></div></div>
+        <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל שבוע בחודש</p><div id="monthlyAnchorChart" class="chart"></div></div>
       </div>
       <h3 class="section-title">שאלות תחזוקה חודשית</h3>
       <div class="twenty-one-question"><label for="monthlyPeoplePleasing">איפה אני מרצה לאחרונה?</label><textarea id="monthlyPeoplePleasing"></textarea></div>
@@ -345,11 +346,11 @@
     <button id="backFromYearlyBtn" type="button" class="button-blue back-button">חזור לדאשבורד</button>
     <div class="dashboard-shell">
       <div class="dashboard-header"><h2>מעקב שנתי</h2><span class="badge" style="background:var(--gold-400);padding:8px 14px;border-radius:999px;font-weight:700">שנתי</span></div>
-      <p class="muted">סיכום שנתי מתוך הנתונים שנשמרו בשאלונים היומיים.</p>
+      <p class="muted">סיכום השנה מתוך השאלונים היומיים שנשמרו: <strong id="yearlyRangeLabel"></strong></p>
       <div class="charts-grid">
-        <div class="chart-card"><h3>מספר הזיהויים</h3><p>השוואה בין ארבעת הרבעונים</p><div id="yearlyTriggersChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר הזיהויים</h3><p>לפי רבעוני השנה</p><div id="yearlyTriggersChart" class="chart"></div></div>
         <div class="chart-card"><h3>תרגיל עצירה מרכזי</h3><p>כלי העצירה הבולט בכל רבעון</p><div id="yearlyStopToolsChart" class="chart"></div></div>
-        <div class="chart-card"><h3>מספר ההחלפות השבועי</h3><p>מספר החלפות הזהות בכל רבעון</p><div id="yearlyIdentityChart" class="chart"></div></div>
+        <div class="chart-card"><h3>מספר ההחלפות</h3><p>מספר החלפות הזהות בכל רבעון</p><div id="yearlyIdentityChart" class="chart"></div></div>
         <div class="chart-card"><h3>מערך תומך</h3><p>התמיכה המרכזית בכל רבעון</p><div id="yearlyEcosystemChart" class="chart"></div></div>
         <div class="chart-card"><h3>שביעות הרצון מהחיווט</h3><p>ממוצע יומי בכל רבעון מתוך 100</p><div id="yearlySatisfactionChart" class="chart"></div></div>
         <div class="chart-card"><h3>משפט עוגן מועדף</h3><p>המשפט המרכזי בכל רבעון</p><div id="yearlyAnchorChart" class="chart"></div></div>
@@ -427,7 +428,7 @@
       </div>
     </div>
 
-    <label>4. בחירת משפט עוגן יומי מתוך רשימה</label>
+    <label>4. בחירת משפט עוגן יומי מתוך רשימה <span class="field-note">נשמר אוטומטית ויופיע בדאשבורד</span> <span id="anchorSaveStatus" class="anchor-saved" aria-live="polite"></span></label>
     <div class="highlight">
       <select id="anchor" onchange="document.getElementById('anchorOther').style.display=(this.value==='other'?'block':'none')">
         <option value="">-- בחר משפט עוגן --</option>
@@ -856,6 +857,71 @@
         .sort((a, b) => a.date.localeCompare(b.date));
     }
 
+    // ---------- תקופות לפי לוח השנה ----------
+    const hebrewMonths = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
+
+    function startOfDay(date) {
+      const d = new Date(date);
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }
+
+    function addDays(date, n) {
+      const d = new Date(date);
+      d.setDate(d.getDate() + n);
+      return d;
+    }
+
+    function daysBetweenInclusive(start, end) {
+      return Math.round((startOfDay(end) - startOfDay(start)) / 86400000) + 1;
+    }
+
+    // מחזיר את תחילת וסוף התקופה הנוכחית: 'week' (ראשון–שבת), 'month', 'year'
+    function getCalendarPeriod(type, ref = new Date()) {
+      const today = startOfDay(ref);
+      let start, end;
+      if (type === 'week') {
+        start = addDays(today, -today.getDay());
+        end = addDays(start, 6);
+      } else if (type === 'month') {
+        start = new Date(today.getFullYear(), today.getMonth(), 1);
+        end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      } else {
+        start = new Date(today.getFullYear(), 0, 1);
+        end = new Date(today.getFullYear(), 11, 31);
+      }
+      return {
+        type, start, end,
+        totalDays: daysBetweenInclusive(start, end),
+        elapsedDays: daysBetweenInclusive(start, today),
+      };
+    }
+
+    function getEntriesBetween(start, end) {
+      const from = formatDate(start), to = formatDate(end);
+      return getAllDailyEntries().filter(entry => entry.date >= from && entry.date <= to);
+    }
+
+    function getPeriodLabel(period) {
+      if (period.type === 'week') return `${shortDate(formatDate(period.start))}–${shortDate(formatDate(period.end))}`;
+      if (period.type === 'month') return `${hebrewMonths[period.start.getMonth()]} ${period.start.getFullYear()}`;
+      return String(period.start.getFullYear());
+    }
+
+    // חלוקת החודש לשבועות (1–7, 8–14, 15–21, 22–סוף החודש) והשנה לרבעונים
+    function getPeriodBuckets(period) {
+      if (period.type === 'month') {
+        const y = period.start.getFullYear(), m = period.start.getMonth(), last = period.end.getDate();
+        return [[1, 7], [8, 14], [15, 21], [22, last]].map(([a, b]) => ({
+          start: new Date(y, m, a), end: new Date(y, m, b), label: `${a}–${b}`,
+        }));
+      }
+      const y = period.start.getFullYear();
+      return [['ינו׳–מרץ', 0], ['אפר׳–יוני', 3], ['יולי–ספט׳', 6], ['אוק׳–דצמ׳', 9]].map(([label, m]) => ({
+        start: new Date(y, m, 1), end: new Date(y, m + 3, 0), label,
+      }));
+    }
+
     function getEntriesInLastDays(days) {
       const cutoff = new Date();
       cutoff.setDate(cutoff.getDate() - days + 1);
@@ -870,7 +936,8 @@
     }
 
     function getWeeklyMetrics() {
-      const entries = getEntriesInLastDays(7);
+      const week = getCalendarPeriod('week');
+      const entries = getEntriesBetween(week.start, week.end);
       const stopTools = entries.map(entry => entry.stopToolText);
       const anchors = entries.map(entry => entry.anchor === 'other' ? entry.anchorOtherText : entry.anchor);
       const ecosystemLabels = {
@@ -887,18 +954,20 @@
           if (entry[key]) ecosystemValues.push(ecosystemLabels[key]);
         });
       });
-      const satisfactionTotal = entries.reduce((total, entry) => total + (Number(entry.satisfactionRating) || 0), 0);
+      const rated = entries.filter(entry => typeof entry.satisfactionRating === 'number' && !Number.isNaN(entry.satisfactionRating));
+      const satisfactionTotal = rated.reduce((total, entry) => total + entry.satisfactionRating, 0);
       return {
         triggerTotal: entries.reduce((total, entry) => total + (Number(entry.triggerCount) || 0), 0),
         stopTool: mostFrequentValue(stopTools),
         preferredAnchor: mostFrequentValue(anchors),
         identityTotal: entries.reduce((total, entry) => total + (Number(entry.identitySuccessCount) || 0), 0),
         ecosystem: mostFrequentValue(ecosystemValues),
-        satisfaction: entries.length ? Math.round(satisfactionTotal / entries.length) : 0,
+        satisfaction: rated.length ? Math.round(satisfactionTotal / rated.length) : 0,
       };
     }
 
     function renderWeeklyMetrics() {
+      document.getElementById('weeklyRangeLabel').textContent = getPeriodLabel(getCalendarPeriod('week'));
       const metrics = getWeeklyMetrics();
       document.getElementById('weeklyTriggerTotal').textContent = metrics.triggerTotal;
       document.getElementById('weeklyStopTool').textContent = metrics.stopTool;
@@ -942,6 +1011,8 @@
     }
 
     function loadWeeklyReflection() {
+      document.querySelectorAll('#weeklyView textarea').forEach(t => { t.value = ''; });
+      document.querySelectorAll('input[name="weeklyScore"]').forEach(i => { i.checked = false; });
       const raw = localStorage.getItem(getWeeklyStorageKey());
       if (raw) setWeeklyReflection(JSON.parse(raw));
     }
@@ -977,8 +1048,9 @@
       if (type === 'triggers') return entries.reduce((total, entry) => total + (Number(entry.triggerCount) || 0), 0);
       if (type === 'identity') return entries.reduce((total, entry) => total + (Number(entry.identitySuccessCount) || 0), 0);
       if (type === 'satisfaction') {
-        const total = entries.reduce((sum, entry) => sum + (Number(entry.satisfactionRating) || 0), 0);
-        return entries.length ? Math.round(total / entries.length) : 0;
+        const rated = entries.filter(entry => typeof entry.satisfactionRating === 'number' && !Number.isNaN(entry.satisfactionRating));
+        const total = rated.reduce((sum, entry) => sum + entry.satisfactionRating, 0);
+        return rated.length ? Math.round(total / rated.length) : 0;
       }
       if (type === 'stopTool') return mostFrequentValue(entries.map(entry => entry.stopToolText));
       if (type === 'anchor') return mostFrequentValue(entries.map(entry => entry.anchor === 'other' ? entry.anchorOtherText : entry.anchor));
@@ -1003,6 +1075,24 @@
         const label = labels ? labels[index] : getWeekLabel(index);
         return `<div class="chart-column"><div class="chart-value">${value}</div><div class="chart-bar" style="height:${height}px"></div><div class="chart-label">${label}</div></div>`;
       }).join('');
+    }
+
+    function renderCalendarCharts(prefix, period) {
+      const buckets = getPeriodBuckets(period);
+      const bucketEntries = buckets.map(b => getEntriesBetween(b.start, b.end));
+      const types = { TriggersChart: 'triggers', StopToolsChart: 'stopTool', IdentityChart: 'identity', EcosystemChart: 'ecosystem', SatisfactionChart: 'satisfaction', AnchorChart: 'anchor' };
+      Object.entries(types).forEach(([suffix, type]) => {
+        const element = document.getElementById(prefix + suffix);
+        if (!element) return;
+        const values = bucketEntries.map(entries => getWeekMetric(entries, type));
+        const numericValues = values.map(value => typeof value === 'number' ? value : 0);
+        const max = Math.max(...numericValues, 1);
+        element.innerHTML = values.map((value, index) => {
+          const numericValue = numericValues[index];
+          const height = numericValue ? Math.max(8, Math.round((numericValue / max) * 155)) : 4;
+          return `<div class="chart-column"><div class="chart-value" title="${value}">${value}</div><div class="chart-bar" style="height:${height}px"></div><div class="chart-label">${buckets[index].label}</div></div>`;
+        }).join('');
+      });
     }
 
     function renderPeriodCharts(prefix, days, bucketCount = days / 7, labels) {
@@ -1048,7 +1138,9 @@
       renderPeriodCharts('fortyTwo', 42);
     }
     function renderMonthlyCharts() {
-      renderPeriodCharts('monthly', 28, 4, ['שבוע 1', 'שבוע 2', 'שבוע 3', 'שבוע 4']);
+      const month = getCalendarPeriod('month');
+      document.getElementById('monthlyRangeLabel').textContent = getPeriodLabel(month);
+      renderCalendarCharts('monthly', month);
     }
 
     function getSixtyThreeReflection() {
@@ -1078,8 +1170,15 @@
       return Object.fromEntries(fields.map(id => [id, document.getElementById(id).value]));
     }
 
+    function getMonthlyReflectionKey() {
+      const m = getCalendarPeriod('month').start;
+      return `dailyRewire-monthly-reflection-${m.getFullYear()}-${String(m.getMonth() + 1).padStart(2, '0')}`;
+    }
+
     function loadMonthlyReflection() {
-      const raw = localStorage.getItem('dailyRewire-monthly-reflection');
+      ['monthlyPeoplePleasing', 'monthlyBoundary', 'monthlyNeed', 'monthlySelfChoice', 'monthlySupport', 'monthlyPractice'].forEach(id => { document.getElementById(id).value = ''; });
+      // גרסאות קודמות שמרו את התחזוקה החודשית במפתח אחד; טוענים אותו אם לחודש הזה עוד אין
+      const raw = localStorage.getItem(getMonthlyReflectionKey()) || localStorage.getItem('dailyRewire-monthly-reflection');
       if (!raw) return;
       const data = JSON.parse(raw);
       Object.keys(data).forEach(key => {
@@ -1089,7 +1188,8 @@
     }
 
     function saveMonthlyReflection() {
-      localStorage.setItem('dailyRewire-monthly-reflection', JSON.stringify(getMonthlyReflection()));
+      localStorage.setItem(getMonthlyReflectionKey(), JSON.stringify(getMonthlyReflection()));
+      localStorage.removeItem('dailyRewire-monthly-reflection');
       const status = document.getElementById('monthlySaveStatus');
       status.textContent = 'התחזוקה החודשית נשמרה.';
       setTimeout(() => { status.textContent = ''; }, 3500);
@@ -1100,8 +1200,13 @@
       return Object.fromEntries(fields.map(id => [id, document.getElementById(id).value]));
     }
 
+    function getYearlyReflectionKey() {
+      return `dailyRewire-yearly-reflection-${new Date().getFullYear()}`;
+    }
+
     function loadYearlyReflection() {
-      const raw = localStorage.getItem('dailyRewire-yearly-reflection');
+      document.querySelectorAll('#yearlyView textarea').forEach(t => { t.value = ''; });
+      const raw = localStorage.getItem(getYearlyReflectionKey()) || localStorage.getItem('dailyRewire-yearly-reflection');
       if (!raw) return;
       const data = JSON.parse(raw);
       Object.keys(data).forEach(key => {
@@ -1111,7 +1216,8 @@
     }
 
     function saveYearlyReflection() {
-      localStorage.setItem('dailyRewire-yearly-reflection', JSON.stringify(getYearlyReflection()));
+      localStorage.setItem(getYearlyReflectionKey(), JSON.stringify(getYearlyReflection()));
+      localStorage.removeItem('dailyRewire-yearly-reflection');
       const status = document.getElementById('yearlySaveStatus');
       status.textContent = 'המעקב השנתי נשמר.';
       setTimeout(() => { status.textContent = ''; }, 3500);
@@ -1383,6 +1489,20 @@
       document.getElementById('satisfactionRating').addEventListener('input', () => updateRatingValue('satisfactionRating', 'satisfactionRatingValue'));
       document.getElementById('anchor').addEventListener('change', function() {
         document.getElementById('anchorOther').style.display = this.value === 'other' ? 'block' : 'none';
+        if (this.value === 'other') {
+          document.getElementById('anchorOtherText').focus();
+          if (!document.getElementById('anchorOtherText').value.trim()) return;
+        }
+        saveAnchorNow();
+      });
+      let anchorTypingTimer = null;
+      document.getElementById('anchorOtherText').addEventListener('input', () => {
+        clearTimeout(anchorTypingTimer);
+        anchorTypingTimer = setTimeout(saveAnchorNow, 700);
+      });
+      document.getElementById('anchorOtherText').addEventListener('change', () => {
+        clearTimeout(anchorTypingTimer);
+        saveAnchorNow();
       });
       document.getElementById('clearFormBtn').addEventListener('click', clearForm);
       document.getElementById('requestNotificationPermissionBtn').addEventListener('click', requestNotificationPermission);
@@ -1415,12 +1535,18 @@
     }
 
     function renderDashboardProgress() {
-      const setProgress = (id, days) => {
-        const percent = Math.min(100, Math.round((getEntriesInLastDays(days).length / days) * 100));
+      const setProgress = (id, type) => {
+        const period = getCalendarPeriod(type);
+        const filled = getEntriesBetween(period.start, period.end).length;
+        const percent = Math.min(100, Math.round((filled / period.totalDays) * 100));
         const bar = document.getElementById(id);
         if (bar) { bar.style.width = percent + '%'; bar.title = percent + '% מהימים מולאו'; }
         const text = document.getElementById(id + 'Text');
-        if (text) text.textContent = `${getEntriesInLastDays(days).length} מתוך ${days} ימים מולאו`;
+        if (text) {
+          const prefix = type === 'week' ? 'השבוע' : getPeriodLabel(period);
+          const elapsed = period.elapsedDays < period.totalDays ? ` (עברו ${period.elapsedDays})` : '';
+          text.textContent = `${prefix}: מולאו ${filled} מתוך ${period.totalDays} ימים${elapsed}`;
+        }
       };
       renderAnchorCard();
       const streakEl = document.getElementById('streakCount');
@@ -1428,9 +1554,9 @@
       const todayLabel = document.getElementById('todayLabel');
       if (todayLabel) todayLabel.textContent = new Date().toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
       renderLastBackup();
-      setProgress('weeklyProgress', 7);
-      setProgress('monthlyProgress', 28);
-      setProgress('yearlyProgress', 364);
+      setProgress('weeklyProgress', 'week');
+      setProgress('monthlyProgress', 'month');
+      setProgress('yearlyProgress', 'year');
     }
 
     // ---------- גיבוי ושחזור ----------
@@ -1538,8 +1664,11 @@
 
     function renderLineChart(elementId, series, getValue, options) {
       const el = document.getElementById(elementId);
-      const points = series.map((item, index) => ({ index, date: item.date, value: item.entry ? getValue(item.entry) : null }));
-      const logged = points.filter(p => p.value !== null && !Number.isNaN(p.value));
+      const points = series.map((item, index) => {
+        const raw = item.entry ? getValue(item.entry) : null;
+        return { index, date: item.date, value: (raw === null || raw === undefined || Number.isNaN(raw)) ? null : raw };
+      });
+      const logged = points.filter(p => p.value !== null);
       if (!logged.length) {
         el.innerHTML = '<div class="empty-note">אין עדיין יומנים בטווח הזה.</div>';
         return;
@@ -1619,10 +1748,11 @@
     function renderTrends() {
       const series = getDailySeries(trendRange);
       document.querySelectorAll('.range-tabs button').forEach(btn => btn.classList.toggle('active', Number(btn.dataset.range) === trendRange));
-      renderLineChart('trendSatisfaction', series, e => Number(e.satisfactionRating), { min: 0, max: 100, higherIsBetter: true, label: 'שביעות רצון' });
-      renderLineChart('trendTriggers', series, e => Number(e.triggerCount) || 0, { min: 0, higherIsBetter: null, label: 'זיהויים' });
-      renderLineChart('trendIdentity', series, e => Number(e.identitySuccessCount) || 0, { min: 0, higherIsBetter: true, label: 'החלפות' });
-      renderLineChart('trendSupport', series, e => Number(e.supportRating), { min: 0, max: 10, higherIsBetter: true, label: 'תמיכה' });
+      const num = v => (typeof v === 'number' && !Number.isNaN(v)) ? v : null;
+      renderLineChart('trendSatisfaction', series, e => num(e.satisfactionRating), { min: 0, max: 100, higherIsBetter: true, label: 'שביעות רצון' });
+      renderLineChart('trendTriggers', series, e => num(e.triggerCount), { min: 0, higherIsBetter: null, label: 'זיהויים' });
+      renderLineChart('trendIdentity', series, e => num(e.identitySuccessCount), { min: 0, higherIsBetter: true, label: 'החלפות' });
+      renderLineChart('trendSupport', series, e => num(e.supportRating), { min: 0, max: 10, higherIsBetter: true, label: 'תמיכה' });
       renderTopTriggers(series);
     }
 
@@ -1659,6 +1789,29 @@
         day.setDate(day.getDate() + 1);
       }
       strip.innerHTML = html;
+    }
+
+    // ---------- שמירה מיידית של משפט העוגן ----------
+    // המשפט נשמר מיד ליומן של התאריך שבטופס, בלי לגעת בשאר השדות שכבר נשמרו
+    function saveAnchorNow() {
+      const dateStr = document.getElementById('entryDate').value || getTodayDateStr();
+      const anchor = document.getElementById('anchor').value;
+      const anchorOtherText = document.getElementById('anchorOtherText').value;
+      const key = storagePrefix + dateStr;
+      let entry = null;
+      try { entry = JSON.parse(localStorage.getItem(key)); } catch (e) { entry = null; }
+      if (!entry || !entry.date) entry = { date: dateStr };
+      entry.anchor = anchor;
+      entry.anchorOtherText = anchorOtherText;
+      localStorage.setItem(key, JSON.stringify(entry));
+      const status = document.getElementById('anchorSaveStatus');
+      const hasAnchor = anchor && (anchor !== 'other' || anchorOtherText.trim());
+      status.textContent = hasAnchor ? '✓ נשמר' : '';
+      clearTimeout(saveAnchorNow.timer);
+      saveAnchorNow.timer = setTimeout(() => { status.textContent = ''; }, 3000);
+      renderSavedList();
+      renderWeekStrip();
+      renderDashboardProgress();
     }
 
     // ---------- משפט העוגן בדאשבורד ----------
@@ -1816,11 +1969,19 @@
       document.getElementById('weeklyView').hidden = true;
       document.getElementById('monthlyView').hidden = true;
       document.getElementById('yearlyView').hidden = false;
-      renderPeriodCharts('yearly', 364, 4, ['רבעון 1', 'רבעון 2', 'רבעון 3', 'רבעון 4']);
+      const year = getCalendarPeriod('year');
+      document.getElementById('yearlyRangeLabel').textContent = getPeriodLabel(year);
+      renderCalendarCharts('yearly', year);
       loadYearlyReflection();
     }
 
-    document.getElementById('openDailyBtn').addEventListener('click', showDailyView);
+    document.getElementById('openDailyBtn').addEventListener('click', () => {
+      showDailyView();
+      const today = getTodayDateStr();
+      document.getElementById('entryDate').value = today;
+      clearForm();
+      if (localStorage.getItem(storagePrefix + today)) loadDailyData(today);
+    });
     document.getElementById('backToDashboardBtn').addEventListener('click', showDashboard);
     document.getElementById('openWeeklyBtn').addEventListener('click', showWeeklyView);
     document.getElementById('backFromWeeklyBtn').addEventListener('click', showDashboard);
