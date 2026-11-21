@@ -4,6 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>תרגול יומי לחיווט מחדש של המח הרגיש</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#163d66">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="חיווט מחדש">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -179,6 +187,18 @@
     .top-triggers .bar-row{display:flex;align-items:center;gap:10px}
     .top-triggers .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--navy-700),var(--gold-500))}
     .empty-note{padding:30px 10px;text-align:center;color:var(--muted)}
+    .anchor-card{margin-bottom:18px;padding:20px 22px;border-radius:18px;background:linear-gradient(135deg,var(--navy-700),var(--navy-900));color:#fff;box-shadow:var(--shadow);position:relative}
+    .anchor-card .anchor-label{display:block;color:var(--gold-400);font-weight:700;font-size:.95rem;margin-bottom:6px}
+    .anchor-card .anchor-text{display:block;font-size:1.35rem;font-weight:700;line-height:1.5}
+    .anchor-card .anchor-sub{margin-top:10px;color:#c7dcff;font-size:.92rem}
+    .anchor-card .anchor-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+    .anchor-card .button-yellow{padding:8px 14px}
+    .install-box{margin-bottom:18px;padding:14px 18px;border-radius:16px;background:#fff;border:1px solid var(--gold-500);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .install-box[hidden]{display:none}
+    .install-box .close-x{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:4px 8px}
+    .offline-badge{display:inline-block;margin-inline-start:8px;padding:2px 10px;border-radius:999px;background:var(--blue-200);color:var(--navy-700);font-size:.85rem;font-weight:700}
+    .offline-badge[hidden]{display:none}
+    @media(max-width:600px){.anchor-card .anchor-text{font-size:1.15rem}}
     @media(max-width:600px){body{padding:12px 10px 30px;margin:8px auto}section,.dashboard-shell{padding:18px 16px;border-radius:18px}h1,.app-header h1{font-size:1.6rem}h2{font-size:1.45rem}}
     @media print{body{background:#fff}section{box-shadow:none;border:1px solid #ccc}}
     @media(min-width:900px){
@@ -192,9 +212,27 @@
     <div class="app-header">
       <div>
         <h1>תרגול יומי לחיווט מחדש</h1>
-        <div class="today-date" id="todayLabel"></div>
+        <div class="today-date"><span id="todayLabel"></span><span class="offline-badge" id="offlineBadge" hidden>מצב לא מקוון</span></div>
       </div>
-      <span class="streak" id="streakBadge" title="ימים רצופים שבהם נשמר יומן">🔥 <span id="streakCount">0</span> ימים ברצף</span>
+      <span class="streak" id="streakBadge" title="ימים רצופים שבהם נשמר יומן">🔥 <span id="streakCount">0 ימים</span> ברצף</span>
+    </div>
+
+    <div class="install-box" id="installBox" hidden>
+      <div>
+        <strong>📱 להתקין כאפליקציה?</strong>
+        <div class="muted" id="installText">אייקון במסך הבית, ועבודה גם בלי אינטרנט.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <button id="installBtn" type="button" class="button-blue">התקנה</button>
+        <button id="installDismissBtn" type="button" class="close-x" aria-label="סגור">✕</button>
+      </div>
+    </div>
+
+    <div class="anchor-card" id="anchorCard">
+      <span class="anchor-label" id="anchorCardLabel">המשפט העוגן שלי להיום</span>
+      <span class="anchor-text" id="anchorCardText"></span>
+      <div class="anchor-sub" id="anchorCardSub"></div>
+      <div class="anchor-actions" id="anchorCardActions"></div>
     </div>
     <div class="highlight" style="margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
       <div><strong>היום שלך</strong><div class="muted">המשך את התרגול היומי ושמור את ההתקדמות שלך.</div></div>
@@ -1384,8 +1422,9 @@
         const text = document.getElementById(id + 'Text');
         if (text) text.textContent = `${getEntriesInLastDays(days).length} מתוך ${days} ימים מולאו`;
       };
+      renderAnchorCard();
       const streakEl = document.getElementById('streakCount');
-      if (streakEl) streakEl.textContent = getStreak();
+      if (streakEl) { const streak = getStreak(); streakEl.textContent = streak === 1 ? 'יום אחד' : `${streak} ימים`; }
       const todayLabel = document.getElementById('todayLabel');
       if (todayLabel) todayLabel.textContent = new Date().toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
       renderLastBackup();
@@ -1622,6 +1661,122 @@
       strip.innerHTML = html;
     }
 
+    // ---------- משפט העוגן בדאשבורד ----------
+    function getAnchorText(entry) {
+      if (!entry || !entry.anchor) return '';
+      return entry.anchor === 'other' ? (entry.anchorOtherText || '').trim() : entry.anchor;
+    }
+
+    function chooseTodayAnchor() {
+      showDailyView();
+      const today = getTodayDateStr();
+      if (localStorage.getItem(storagePrefix + today)) {
+        document.getElementById('entryDate').value = today;
+        clearForm();
+        loadDailyData(today);
+      }
+      const select = document.getElementById('anchor');
+      select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => select.focus(), 400);
+    }
+
+    function renderAnchorCard() {
+      const card = document.getElementById('anchorCard');
+      if (!card) return;
+      const today = getTodayDateStr();
+      const entries = getAllDailyEntries();
+      const todayEntry = entries.find(e => e.date === today);
+      const todayAnchor = getAnchorText(todayEntry);
+      const label = document.getElementById('anchorCardLabel');
+      const text = document.getElementById('anchorCardText');
+      const sub = document.getElementById('anchorCardSub');
+      const actions = document.getElementById('anchorCardActions');
+      actions.innerHTML = '';
+      const addButton = caption => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'button-yellow';
+        btn.textContent = caption;
+        btn.addEventListener('click', chooseTodayAnchor);
+        actions.appendChild(btn);
+      };
+
+      if (todayAnchor) {
+        label.textContent = 'המשפט העוגן שלי להיום';
+        text.textContent = `״${todayAnchor}״`;
+        sub.textContent = 'קחי אותו איתך לאורך היום.';
+        addButton('להחליף משפט');
+        return;
+      }
+      const last = [...entries].reverse().find(e => getAnchorText(e));
+      if (last) {
+        label.textContent = 'המשפט העוגן האחרון שלי';
+        text.textContent = `״${getAnchorText(last)}״`;
+        sub.textContent = `נבחר ב-${shortDate(last.date)}. עוד לא נבחר משפט להיום.`;
+        addButton('לבחור משפט להיום');
+      } else {
+        label.textContent = 'משפט עוגן';
+        text.textContent = 'עוד לא נבחר משפט עוגן.';
+        sub.textContent = 'בחרי משפט שילווה אותך היום — הוא יופיע כאן בכל כניסה.';
+        addButton('לבחור משפט עוגן');
+      }
+    }
+
+    // ---------- התקנה כאפליקציה (PWA) ----------
+    let deferredInstallPrompt = null;
+    const installDismissKey = 'dailyRewire-install-dismissed';
+
+    function isStandalone() {
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+
+    function isIos() {
+      return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    }
+
+    function updateInstallBox() {
+      const box = document.getElementById('installBox');
+      if (!box) return;
+      if (isStandalone() || localStorage.getItem(installDismissKey) === 'true') { box.hidden = true; return; }
+      const btn = document.getElementById('installBtn');
+      const text = document.getElementById('installText');
+      if (deferredInstallPrompt) {
+        text.textContent = 'אייקון במסך הבית, ועבודה גם בלי אינטרנט.';
+        btn.hidden = false;
+        box.hidden = false;
+      } else if (isIos() && location.protocol === 'https:') {
+        text.innerHTML = 'בספארי: לחצי על כפתור השיתוף <strong>⎋</strong> ואז על <strong>״הוסף למסך הבית״</strong>.';
+        btn.hidden = true;
+        box.hidden = false;
+      } else {
+        box.hidden = true;
+      }
+    }
+
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      updateInstallBox();
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      updateInstallBox();
+    });
+
+    function updateOfflineBadge() {
+      const badge = document.getElementById('offlineBadge');
+      if (badge) badge.hidden = navigator.onLine;
+    }
+    window.addEventListener('online', updateOfflineBadge);
+    window.addEventListener('offline', updateOfflineBadge);
+
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.warn('Service worker registration failed', err));
+      });
+    }
+
     function showDashboard() {
       document.getElementById('trendsView').hidden = true;
       document.getElementById('dailyView').hidden = true;
@@ -1676,6 +1831,20 @@
     document.getElementById('openYearlyBtn').addEventListener('click', showYearlyView);
     document.getElementById('backFromYearlyBtn').addEventListener('click', showDashboard);
     document.getElementById('saveYearlyBtn').addEventListener('click', saveYearlyReflection);
+
+    document.getElementById('installBtn').addEventListener('click', async () => {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      updateInstallBox();
+    });
+    document.getElementById('installDismissBtn').addEventListener('click', () => {
+      localStorage.setItem(installDismissKey, 'true');
+      updateInstallBox();
+    });
+    updateInstallBox();
+    updateOfflineBadge();
 
     document.getElementById('openTrendsBtn').addEventListener('click', showTrendsView);
     document.getElementById('backFromTrendsBtn').addEventListener('click', showDashboard);
