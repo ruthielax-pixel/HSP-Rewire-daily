@@ -1,6 +1,6 @@
 // Service worker — מאפשר לאפליקציה לעבוד גם בלי אינטרנט.
 // כשמשנים קבצים באפליקציה, מעלים את מספר הגרסה כדי שהמכשירים יקבלו את העדכון.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = 'hsp-rewire-' + VERSION;
 const FONT_CACHE = 'hsp-rewire-fonts';
 const APP_FILES = [
@@ -46,7 +46,8 @@ self.addEventListener('fetch', event => {
   // הדף עצמו: קודם מהרשת (כדי לקבל עדכונים), ואם אין אינטרנט — מהמטמון
   if (req.mode === 'navigate') {
     event.respondWith(
-      fetch(req)
+      // no-cache: תמיד לבדוק מול השרת אם יש גרסה חדשה, במקום להשתמש בעותק שמור של הדפדפן
+      fetch(req, { cache: 'no-cache' })
         .then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put('./index.html', copy)); return res; })
         .catch(() => caches.match('./index.html'))
     );
