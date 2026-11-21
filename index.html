@@ -187,6 +187,11 @@
     .top-triggers .bar-row{display:flex;align-items:center;gap:10px}
     .top-triggers .bar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--navy-700),var(--gold-500))}
     .empty-note{padding:30px 10px;text-align:center;color:var(--muted)}
+    .draft-banner{margin:0 0 18px;padding:12px 16px;border-radius:14px;background:#fff9dc;border:1px solid var(--gold-500);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .draft-banner[hidden]{display:none}
+    .draft-banner button{padding:8px 14px}
+    .draft-status{color:var(--gold-600);font-weight:700}
+    .button-blue.unsaved{background:var(--gold-500);color:var(--navy-900);box-shadow:0 0 0 4px rgba(240,187,45,.3)}
     .anchor-saved{color:var(--success);font-weight:700;font-size:.95rem}
     .anchor-card{margin-bottom:18px;padding:20px 22px;border-radius:18px;background:linear-gradient(135deg,var(--navy-700),var(--navy-900));color:#fff;box-shadow:var(--shadow);position:relative}
     .anchor-card .anchor-label{display:block;color:var(--gold-400);font-weight:700;font-size:.95rem;margin-bottom:6px}
@@ -390,6 +395,12 @@
     <h1>תרגול יומי לחיווט מחדש</h1>
 
   <div class="week-strip" id="weekStrip"></div>
+
+  <div class="draft-banner" id="draftBanner" hidden>
+    <div><strong>📝 שוחזרה טיוטה שלא נשמרה</strong> <span class="muted" id="draftBannerTime"></span>
+      <div class="muted">מה שהקלדת חזר לטופס. כדי שזה ייכנס ליומן, לחצי ״שמור יומי״ בסוף הדף.</div></div>
+    <button type="button" class="button-blue" id="discardDraftBtn">לבטל את הטיוטה</button>
+  </div>
 
   <div class="sections-grid">
 
@@ -604,6 +615,7 @@
       <button id="saveDailyBtn" type="button" class="button-blue">שמור יומי</button>
       <button id="loadTodayBtn" type="button" class="button-yellow">טען נתוני היום</button>
       <span id="saveStatus" style="color:#03396c;font-weight:700"></span>
+      <span id="draftStatus" class="draft-status" aria-live="polite"></span>
     </div>
     <div style="margin-top:8px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
       <button id="clearFormBtn" type="button" class="button-blue">נקה טופס</button>
@@ -660,6 +672,7 @@
       let value = parseInt(counter.textContent, 10) || 0;
       value = Math.max(0, value + delta);
       counter.textContent = value;
+      if (typeof scheduleDraftSave === 'function') scheduleDraftSave();
     }
 
     function updateIdentitySuccessCount(delta) {
@@ -667,6 +680,7 @@
       let value = parseInt(counter.textContent, 10) || 0;
       value = Math.max(0, value + delta);
       counter.textContent = value;
+      if (typeof scheduleDraftSave === 'function') scheduleDraftSave();
     }
 
     function updateRatingValue(rangeId, valueId) {
@@ -774,6 +788,73 @@
       updateRatingValue('satisfactionRating', 'satisfactionRatingValue');
     }
 
+    // ---------- טיוטה: זוכרת את מה שהוקלד עד שלוחצים "שמור יומי" ----------
+    // הטיוטה נשמרת בנפרד מהיומן, לא נספרת בהתקדמות ולא בגרפים.
+    function draftKey(dateStr) {
+      return 'dailyRewire-draft-' + dateStr;
+    }
+
+    let draftTimer = null;
+
+    function setUnsavedIndicator(hasDraft) {
+      const btn = document.getElementById('saveDailyBtn');
+      const status = document.getElementById('draftStatus');
+      if (btn) btn.classList.toggle('unsaved', hasDraft);
+      if (status) status.textContent = hasDraft ? '📝 הטיוטה נזכרת — עוד לא נשמר ביומן' : '';
+    }
+
+    function saveDraftNow() {
+      clearTimeout(draftTimer);
+      const dailyView = document.getElementById('dailyView');
+      if (!dailyView || dailyView.hidden) return;
+      const data = getFormData();
+      if (!data.date) return;
+      data._draftSavedAt = new Date().toISOString();
+      localStorage.setItem(draftKey(data.date), JSON.stringify(data));
+      setUnsavedIndicator(true);
+    }
+
+    function scheduleDraftSave() {
+      clearTimeout(draftTimer);
+      draftTimer = setTimeout(saveDraftNow, 500);
+    }
+
+    function discardDraft(dateStr) {
+      clearTimeout(draftTimer);
+      localStorage.removeItem(draftKey(dateStr));
+      setUnsavedIndicator(false);
+      document.getElementById('draftBanner').hidden = true;
+    }
+
+    // פותח את היומן של תאריך: קודם מה שנשמר, ואם יש טיוטה — היא מעליו
+    function openEntry(dateStr, quiet) {
+      clearTimeout(draftTimer);
+      document.getElementById('entryDate').value = dateStr;
+      clearForm();
+      const saved = localStorage.getItem(storagePrefix + dateStr);
+      if (saved) {
+        if (quiet) setFormData(JSON.parse(saved)); else loadDailyData(dateStr);
+      } else if (!quiet) {
+        showStatus('לא נמצאו נתונים לתאריך זה', true);
+      }
+      document.getElementById('entryDate').value = dateStr;
+      let draft = null;
+      try { draft = JSON.parse(localStorage.getItem(draftKey(dateStr))); } catch (e) { draft = null; }
+      const banner = document.getElementById('draftBanner');
+      if (draft) {
+        setFormData(draft);
+        const when = draft._draftSavedAt ? new Date(draft._draftSavedAt) : null;
+        document.getElementById('draftBannerTime').textContent = when
+          ? `(${when.toLocaleDateString('he-IL')} ${when.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' })})`
+          : '';
+        banner.hidden = false;
+        setUnsavedIndicator(true);
+      } else {
+        banner.hidden = true;
+        setUnsavedIndicator(false);
+      }
+    }
+
     function saveDailyData() {
       const data = getFormData();
       if (!data.date) {
@@ -781,7 +862,8 @@
         return;
       }
       localStorage.setItem(storagePrefix + data.date, JSON.stringify(data));
-      showStatus('הנתונים נשמרו בהצלחה', false);
+      discardDraft(data.date);
+      showStatus('✓ נשמר ביומן', false);
       renderSavedList();
       renderDashboardProgress();
       renderWeekStrip();
@@ -1336,10 +1418,7 @@
         const loadBtn = document.createElement('button');
         loadBtn.textContent = 'טען';
         loadBtn.className = 'button-blue';
-        loadBtn.addEventListener('click', () => {
-          clearForm();
-          loadDailyData(dateStr);
-        });
+        loadBtn.addEventListener('click', () => openEntry(dateStr));
 
         const delBtn = document.createElement('button');
         delBtn.textContent = 'מחק';
@@ -1482,8 +1561,7 @@
       document.getElementById('entryDate').value = todayStr;
       document.getElementById('saveDailyBtn').addEventListener('click', saveDailyData);
       document.getElementById('loadTodayBtn').addEventListener('click', () => {
-        clearForm();
-        loadDailyData(document.getElementById('entryDate').value);
+        openEntry(document.getElementById('entryDate').value || getTodayDateStr());
       });
       document.getElementById('supportRating').addEventListener('input', () => updateRatingValue('supportRating', 'supportRatingValue'));
       document.getElementById('satisfactionRating').addEventListener('input', () => updateRatingValue('satisfactionRating', 'satisfactionRatingValue'));
@@ -1504,7 +1582,23 @@
         clearTimeout(anchorTypingTimer);
         saveAnchorNow();
       });
-      document.getElementById('clearFormBtn').addEventListener('click', clearForm);
+      document.getElementById('clearFormBtn').addEventListener('click', () => {
+        clearForm();
+        discardDraft(document.getElementById('entryDate').value);
+      });
+      document.getElementById('discardDraftBtn').addEventListener('click', () => {
+        const dateStr = document.getElementById('entryDate').value;
+        discardDraft(dateStr);
+        openEntry(dateStr, true);
+      });
+      // כל הקלדה או שינוי ביומן נזכרים כטיוטה
+      const dailyView = document.getElementById('dailyView');
+      const isDraftField = el => el && el.id !== 'entryDate' && el.id !== 'weeklyReminderEnabled' && el.type !== 'file';
+      dailyView.addEventListener('input', e => { if (isDraftField(e.target)) scheduleDraftSave(); });
+      dailyView.addEventListener('change', e => { if (isDraftField(e.target)) scheduleDraftSave(); });
+      // כשהאפליקציה יוצאת לרקע (שיחה, מעבר אפליקציה) — שומרים טיוטה מיד
+      document.addEventListener('visibilitychange', () => { if (document.hidden && draftTimer) saveDraftNow(); });
+      window.addEventListener('pagehide', () => { if (draftTimer) saveDraftNow(); });
       document.getElementById('requestNotificationPermissionBtn').addEventListener('click', requestNotificationPermission);
       const reminderCheckbox = document.getElementById('weeklyReminderEnabled');
       if (reminderCheckbox) {
@@ -1822,12 +1916,7 @@
 
     function chooseTodayAnchor() {
       showDailyView();
-      const today = getTodayDateStr();
-      if (localStorage.getItem(storagePrefix + today)) {
-        document.getElementById('entryDate').value = today;
-        clearForm();
-        loadDailyData(today);
-      }
+      openEntry(getTodayDateStr(), true);
       const select = document.getElementById('anchor');
       select.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(() => select.focus(), 400);
@@ -1931,6 +2020,7 @@
     }
 
     function showDashboard() {
+      if (typeof draftTimer !== 'undefined' && draftTimer) saveDraftNow();
       document.getElementById('trendsView').hidden = true;
       document.getElementById('dailyView').hidden = true;
       document.getElementById('weeklyView').hidden = true;
@@ -1977,10 +2067,7 @@
 
     document.getElementById('openDailyBtn').addEventListener('click', () => {
       showDailyView();
-      const today = getTodayDateStr();
-      document.getElementById('entryDate').value = today;
-      clearForm();
-      if (localStorage.getItem(storagePrefix + today)) loadDailyData(today);
+      openEntry(getTodayDateStr(), true);
     });
     document.getElementById('backToDashboardBtn').addEventListener('click', showDashboard);
     document.getElementById('openWeeklyBtn').addEventListener('click', showWeeklyView);

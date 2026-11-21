@@ -1,6 +1,6 @@
 // Service worker — מאפשר לאפליקציה לעבוד גם בלי אינטרנט.
 // כשמשנים קבצים באפליקציה, מעלים את מספר הגרסה כדי שהמכשירים יקבלו את העדכון.
-const VERSION = 'v3';
+const VERSION = 'v4';
 const CACHE = 'hsp-rewire-' + VERSION;
 const FONT_CACHE = 'hsp-rewire-fonts';
 const APP_FILES = [
