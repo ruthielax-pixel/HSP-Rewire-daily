@@ -150,9 +150,9 @@
       <button id="openDailyBtn" type="button" class="button-yellow">למלא יומן היום</button>
     </div>
     <div class="dashboard-grid">
-      <div class="stage-card" data-stage="weekly" id="openWeeklyBtn"><h3>שבועי</h3><div class="progress"><span style="width:71%"></span></div></div>
-      <div class="stage-card" data-stage="monthly" id="openMonthlyBtn"><h3>חודשי</h3><div class="progress"><span style="width:7%"></span></div></div>
-      <div class="stage-card" data-stage="yearly" id="openYearlyBtn"><h3>שנתי</h3><div class="progress"><span style="width:0%"></span></div></div>
+      <div class="stage-card" data-stage="weekly" id="openWeeklyBtn"><h3>שבועי</h3><div class="progress"><span id="weeklyProgress" style="width:0%"></span></div></div>
+      <div class="stage-card" data-stage="monthly" id="openMonthlyBtn"><h3>חודשי</h3><div class="progress"><span id="monthlyProgress" style="width:0%"></span></div></div>
+      <div class="stage-card" data-stage="yearly" id="openYearlyBtn"><h3>שנתי</h3><div class="progress"><span id="yearlyProgress" style="width:0%"></span></div></div>
     </div>
   </div>
 
@@ -454,6 +454,16 @@
     <label>איך זה הרגיש?</label>
     <textarea id="howItFelt" placeholder="רגש גופני ורגשי"></textarea>
 
+    <label>מה ממערך התמיכה שלי היה איתי היום?</label>
+    <div class="checkboxes">
+      <label class="chip"><input type="checkbox" id="ecosystemPhysical" /> פעילות גופנית</label>
+      <label class="chip"><input type="checkbox" id="ecosystemNutrition" /> תזונה בריאה</label>
+      <label class="chip"><input type="checkbox" id="ecosystemCreativity" /> יצירה</label>
+      <label class="chip"><input type="checkbox" id="ecosystemMeaning" /> משמעות</label>
+      <label class="chip"><input type="checkbox" id="ecosystemHuman" /> סביבה אנושית</label>
+      <label class="chip"><input type="checkbox" id="ecosystemEnvironment" /> סביבה פיזית</label>
+    </div>
+
     <label>עד כמה עזרו לי מערך התמיכה לעשות שינוי? 1-10</label>
     <div class="rating" style="display:flex;align-items:center;gap:12px">
       <input type="range" id="supportRating" min="1" max="10" value="5" />
@@ -515,6 +525,11 @@
 
   <script>
     const storagePrefix = 'dailyRewire-';
+    const dailyKeyPattern = /^dailyRewire-\d{4}-\d{2}-\d{2}$/;
+
+    function isDailyEntryKey(key) {
+      return dailyKeyPattern.test(key);
+    }
 
     function formatDate(date) {
       const year = date.getFullYear();
@@ -586,6 +601,12 @@
         howItFelt: document.getElementById('howItFelt').value,
         supportRating: parseInt(document.getElementById('supportRating').value, 10),
         satisfactionRating: parseInt(document.getElementById('satisfactionRating').value, 10),
+        ecosystemPhysical: document.getElementById('ecosystemPhysical').checked,
+        ecosystemNutrition: document.getElementById('ecosystemNutrition').checked,
+        ecosystemCreativity: document.getElementById('ecosystemCreativity').checked,
+        ecosystemMeaning: document.getElementById('ecosystemMeaning').checked,
+        ecosystemHuman: document.getElementById('ecosystemHuman').checked,
+        ecosystemEnvironment: document.getElementById('ecosystemEnvironment').checked,
       };
     }
 
@@ -630,6 +651,12 @@
       document.getElementById('howItFelt').value = data.howItFelt || '';
       document.getElementById('supportRating').value = data.supportRating || 5;
       document.getElementById('satisfactionRating').value = data.satisfactionRating || 50;
+      document.getElementById('ecosystemPhysical').checked = !!data.ecosystemPhysical;
+      document.getElementById('ecosystemNutrition').checked = !!data.ecosystemNutrition;
+      document.getElementById('ecosystemCreativity').checked = !!data.ecosystemCreativity;
+      document.getElementById('ecosystemMeaning').checked = !!data.ecosystemMeaning;
+      document.getElementById('ecosystemHuman').checked = !!data.ecosystemHuman;
+      document.getElementById('ecosystemEnvironment').checked = !!data.ecosystemEnvironment;
       updateRatingValue('supportRating', 'supportRatingValue');
       updateRatingValue('satisfactionRating', 'satisfactionRatingValue');
     }
@@ -643,6 +670,7 @@
       localStorage.setItem(storagePrefix + data.date, JSON.stringify(data));
       showStatus('הנתונים נשמרו בהצלחה', false);
       renderSavedList();
+      renderDashboardProgress();
     }
 
     function loadDailyData(dateStr) {
@@ -695,6 +723,7 @@
       document.getElementById('howItFelt').value = '';
       document.getElementById('supportRating').value = 5;
       document.getElementById('satisfactionRating').value = 50;
+      ['ecosystemPhysical', 'ecosystemNutrition', 'ecosystemCreativity', 'ecosystemMeaning', 'ecosystemHuman', 'ecosystemEnvironment'].forEach(id => { document.getElementById(id).checked = false; });
       updateRatingValue('supportRating', 'supportRatingValue');
       updateRatingValue('satisfactionRating', 'satisfactionRatingValue');
     }
@@ -708,15 +737,17 @@
 
     function getAllDailyEntries() {
       return Object.keys(localStorage)
-        .filter(key => key.startsWith(storagePrefix))
-        .map(key => JSON.parse(localStorage.getItem(key)))
+        .filter(isDailyEntryKey)
+        .map(key => { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } })
+        .filter(entry => entry && entry.date)
         .sort((a, b) => a.date.localeCompare(b.date));
     }
 
     function getEntriesInLastDays(days) {
       const cutoff = new Date();
       cutoff.setDate(cutoff.getDate() - days + 1);
-      return getAllDailyEntries().filter(entry => new Date(entry.date) >= cutoff);
+      cutoff.setHours(0, 0, 0, 0);
+      return getAllDailyEntries().filter(entry => new Date(entry.date + 'T00:00:00') >= cutoff);
     }
 
     function mostFrequentValue(values) {
@@ -794,7 +825,7 @@
       const today = new Date();
       const day = today.getDay();
       today.setDate(today.getDate() - day);
-      return 'dailyRewire-weekly-reflection-' + getTodayDateStr();
+      return 'dailyRewire-weekly-reflection-' + formatDate(today);
     }
 
     function loadWeeklyReflection() {
@@ -1055,7 +1086,7 @@
 
     function getSavedDates() {
       return Object.keys(localStorage)
-        .filter(key => key.startsWith(storagePrefix))
+        .filter(isDailyEntryKey)
         .map(key => key.replace(storagePrefix, ''))
         .sort();
     }
@@ -1188,7 +1219,13 @@
         'newIdentityAction',
         'howItFelt',
         'supportRating',
-        'satisfactionRating'
+        'satisfactionRating',
+        'ecosystemPhysical',
+        'ecosystemNutrition',
+        'ecosystemCreativity',
+        'ecosystemMeaning',
+        'ecosystemHuman',
+        'ecosystemEnvironment'
       ];
       const escapeValue = value => '"' + String(value || '').replace(/"/g, '""') + '"';
       const rows = entries.map(entry => headers.map(field => escapeValue(entry[field])).join(','));
@@ -1246,6 +1283,7 @@
       // Do not auto-load saved data on init; start with a blank form for today
       // If you want to auto-load, call loadDailyData(getTodayDateStr()) here
       renderSavedList();
+      renderDashboardProgress();
       setInterval(checkWeeklyReminder, 30 * 1000);
       checkWeeklyReminder();
     }
@@ -1258,12 +1296,24 @@
       document.getElementById('dailyView').hidden = false;
     }
 
+    function renderDashboardProgress() {
+      const setProgress = (id, days) => {
+        const percent = Math.min(100, Math.round((getEntriesInLastDays(days).length / days) * 100));
+        const bar = document.getElementById(id);
+        if (bar) { bar.style.width = percent + '%'; bar.title = percent + '% מהימים מולאו'; }
+      };
+      setProgress('weeklyProgress', 7);
+      setProgress('monthlyProgress', 28);
+      setProgress('yearlyProgress', 364);
+    }
+
     function showDashboard() {
       document.getElementById('dailyView').hidden = true;
       document.getElementById('weeklyView').hidden = true;
       document.getElementById('monthlyView').hidden = true;
       document.getElementById('yearlyView').hidden = true;
       document.getElementById('dashboard').hidden = false;
+      renderDashboardProgress();
     }
 
     function showWeeklyView() {
